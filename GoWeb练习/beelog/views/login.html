@@ -1,0 +1,56 @@
+{{template "header"}}  <!-- 引入模板内容 -->
+        <title>登录 我的beego博客</title>
+    </head>
+
+    <body>
+        <div class="container" style="width: 500px">
+            <!-- 提交登录信息的表单（从bootstrap框架上导的）-->
+            <form method="POST" action="/login">
+                <div class="form-group">
+                    <label>Account</label>
+                    <input id="uname" class="form-control" placeholder="Enter account" name="uname">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input id="pwd" type="password" class="form-control" placeholder="Password" name="pwd">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="autoLogin"> 自动登录
+                    </label>
+                </div>
+                <!-- 当onclick的值为false时表单就不会提交 -->
+                <button type="submit" class="btn btn-default" onclick="return checkInput();">登录</button>
+                <button class="btn btn-default" onclick="return backToHome();">返回</button>
+            </form>
+
+            <!-- 检查账号密码是否为空的JS代码-->
+            <script type="text/javascript">
+                function checkInput(){
+                    var uname = document.getElementById("uname");
+                    if(uname.value.length == 0) {
+                        alert("请输入账号");
+                        return false
+                    }
+
+                    var pwd = document.getElementById("pwd");
+                    if(pwd.value.length == 0) {
+                        alert("请输入密码");
+                        return false
+                    }
+
+                    return true
+                }
+
+                function backToHome(){
+                    // 重定向到首页地址
+                    window.location.href = "/";
+
+                    // 返回false，是为了不让表单提交出去
+                    return false
+                }
+            </script>
+        </div>
+    </body>
+
+</html>

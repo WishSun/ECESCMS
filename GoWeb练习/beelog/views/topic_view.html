@@ -1,0 +1,62 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>{{.Topic.Title}} 我的beego博客</title>
+</head>
+
+<body>
+<!-- 创建导航栏, 去bootstrap框架的文档中找导航栏的样式类选择器的class -->
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        {{template "navbar" .}}  <!-- 引入导航栏模板内容(这里加上一个点(.)是为了向模板传递参数) -->
+    </div>
+</div>
+
+
+<div class="container">
+    {{$label := .Labels}}
+    {{with .Topic}}
+    <h1>{{.Title}} <small>{{.Category}}</small></h1>
+        <h5>
+            {{range $label}}
+                <a href="/?label={{.}}">{{.}}</a> <!-- 里边是字符串，所以{{.}}就可以了-->
+            {{end}}
+        </h5>
+    {{.Content}}
+    <h5>文章附件:<a href="/attachment/{{.Attachment}}">{{.Attachment}}</a>）</h5>
+    {{end}}
+</div>
+
+<div class="container">
+    {{$tid := .Topic.Id}}
+    {{$isLogin := .IsLogin}}
+    {{range .Replies}}
+        <!-- 这里必须使用模板变量$tid, 因为如果直接使用.Topic.Id的话，由于在range .Replies中，所以会被解析为.Replies.Topic.Id -->
+        <h3>{{.Name}}<small>{{.Created}}</small>
+            {{if $isLogin}}
+            <small><a href="/reply/delete?tid={{$tid}}&rid={{.Id}}">删除评论</a></small>
+            {{end}}
+        </h3>
+        {{.Content}}
+    {{end}}
+    <h3>本文回复</h3>
+    <form method="POST" action="/reply/add">
+        <input type="hidden" name="tid" value="{{.Topic.Id}}">
+        <div class="form-group">
+            <label>显示昵称：</label>
+            <input type="text" class="form-control" name="nickname">
+        </div>
+
+        <div class="form-group">
+            <label>内容：</label>
+            <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+
+
+        <button class="btn btn-default">提交回复</button>
+    </form>
+</div>
+
+<!-- 导入javascript脚本, 方便使用bootstrap的js插件 -->
+<script type="text/javascript" src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

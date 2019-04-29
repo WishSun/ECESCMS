@@ -1,0 +1,49 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>文章 我的beego博客</title>
+</head>
+
+<body>
+<!-- 创建导航栏, 去bootstrap框架的文档中找导航栏的样式类选择器的class -->
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        {{template "navbar" .}}  <!-- 引入导航栏模板内容(这里加上一个点(.)是为了向模板传递参数) -->
+    </div>
+</div>
+
+
+<div class="container">
+    <h1>文章列表</h1>
+    <a href="/topic/add" class="btn btn-default">添加文章</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>文章名称</th>
+                <th>最后更新</th>
+                <th>浏览</th>
+                <th>回复数</th>
+                <th>最后回复</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Topics}}
+                <tr>
+                    <th>{{.Id}}</th>
+                    <th><a href="/topic/view/{{.Id}}">{{.Title}}</a></th>
+                    <th>{{.Updated}}</th>
+                    <th>{{.Views}}</th>
+                    <th>{{.ReplyCount}}</th>
+                    <th>{{.ReplyTime}}</th>
+                    <th><a href="/topic/delete?tid={{.Id}}">删除</a>  <a href="/topic/modify?tid={{.Id}}">修改</a></th>
+                </tr>
+            {{end}}
+        </tbody>
+    </table>
+</div>
+
+<!-- 导入javascript脚本, 方便使用bootstrap的js插件 -->
+<script type="text/javascript" src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>
