@@ -1,0 +1,161 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<style>
+    p{
+        font-size:20px;
+        font-family: 华文楷体;
+    }
+
+    .myDiv{
+        margin-left: 50px
+    }
+</style>
+
+<script type="text/javascript">
+    var number = 1;
+    function GetGRIPs(GRId){
+        $.post("/admin/major_view",{
+            grid : GRId
+        },function(data){
+            console.log("---"+data)
+            if(data != null)
+            {
+                for(i = 0; i < data.length; i++)
+                {
+                    $("#IPContainer"+GRId).append('<p>'+ data[i].Number + data[i].Description+'</p>')
+                }
+            }
+        },"json");
+    }
+
+    function del(id){
+        $("#"+id).remove()
+    }
+</script>
+</head>
+
+
+{{template "body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    专业信息大纲
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="margin-left: 20px">
+                        {{with .Major}}
+                            <br><hr>
+                            <h3>专业号：</h3>
+                            <div class="myDiv">
+                                <p>{{.Number}}</p>
+                                <br>
+                            </div>
+
+                            <h3>专业名称：</h3>
+                            <div class="myDiv">
+                                <p>{{.Name}}</p>
+                                <br>
+                            </div>
+                        {{end}}
+
+                            <h3>专业培养目标概述：</h3>
+                            <div class="myDiv">
+                                <p>{{.Major.Overview}}</p>
+                                <br>
+                            </div>
+                            <h3>培养目标列表</h3>
+                            <div class="myDiv">
+                                {{range .TrTs}}
+                                    <p>{{.Number}} : {{.Content}}</p>
+                                {{end}}
+                            </div>
+
+                            <h3>毕业要求：</h3>
+                            <div class="myDiv">
+                                {{range .GRs}}
+                                    <p>{{.Number}}.{{.Name}}:<br>{{.Description}}</p>
+                                    <div class="myDiv">
+                                        <h4>指标点列表</h4>
+                                        <div id="IPContainer{{.Id}}"></div>
+                                        <script>
+                                            GetGRIPs({{.Id}})
+                                        </script>
+                                    </div>
+                                {{end}}
+                            </div>
+
+                        {{with .Major}}
+                            <h3>主干学科：</h3>
+                            <div class="myDiv">
+                                <p>{{.MainSubject}}</p>
+                                <br>
+                            </div>
+
+                            <h3>修业年限：</h3>
+                            <div class="myDiv">
+                                <p>{{.StudyYears}}</p>
+                                <br>
+                            </div>
+
+                            <h3>授予学位：</h3>
+                            <div class="myDiv">
+                                <p>{{.Degree}}</p>
+                                <br>
+                            </div>
+
+                            <h3>核心课程：</h3>
+                            <div class="myDiv">
+                                <p>{{.CoreCourse}}</p>
+                                <br>
+                            </div>
+
+                            <h3>毕业要求总学分：</h3>
+                            <div class="myDiv">
+                                <p>{{.TotalCredits}}</p>
+                                <br>
+                            </div>
+
+                            <h3>理论教学总学分：</h3>
+                            <div class="myDiv">
+                                <p>{{.TheoryCredits}}</p>
+                                <br>
+                            </div>
+
+                            <h3>实践教学总学分：</h3>
+                            <div class="myDiv">
+                                <p>{{.PracticeCredits}}</p>
+                                <br>
+                            </div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

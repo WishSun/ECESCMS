@@ -1,0 +1,133 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>教师信息管理首页</title>
+<script type="text/javascript">
+    function AddNewTeacher(){
+        viewElem("AddForm")
+        $("#TNumberText").val("");
+        $("#TNameText").val("")
+    }
+    // 取消添加(将form表单隐藏)
+    function CancelAdd(){
+        hideElem("AddForm")
+        $("#TNumberText").val("");
+        $("#TNameText").val("")
+    }
+
+    function ResetPwd(id){
+        $.post("/admin/teacher_manager/resetpwd",{
+            tid : id
+        },function(data){
+            if(data.Code == 0){
+                // 添加新的元素
+                alert(data.Name + "老师重置密码成功！")
+            }else{
+                alert("重置密码失败！");
+            }
+        },"json");
+    }
+    // 隐藏元素
+    function hideElem(id){
+        document.getElementById(id).style.display = "none"
+    }
+    // 显示
+    function viewElem(id) {
+        document.getElementById(id).style.display = "block"
+    }
+
+</script>
+</head>
+
+{{template "body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    教师信息管理首页
+                </h1>
+                <div>
+                    <button type="button" onclick="AddNewTeacher()">添加新教师</button>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <!-- 添加老师 -->
+                        <div id="AddForm" style="idth:800px;margin-left: 100px">
+                            <br>
+                            <label style="font-size:30px">添加新老师</label>
+                            <hr>
+                            <div style="idth:800px;margin-left: 100px">
+                                <form name="GRForm" role="form" action="/admin/teacher_manager/add"  method="post">
+                                    <div style="width:500px;">
+                                        <label>教师号：</label>
+                                        <input id="TNumberText" class="form-control" name="TNumber" style="width:200px;">
+                                        <label>名字：</label>
+                                        <input id="TNameText" class="form-control" name="TName" style="width:200px;">
+                                        <label>密码(初始密码为6个0)：</label>
+                                        <input class="form-control" type="text" placeholder="000000" disabled="" name="TPwd">
+                                        <br>
+                                        <input type="submit" class="btn btn-default">
+                                        <button type="button" class="btn btn-default" onclick="CancelAdd()">取消</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <br><br><br>
+                        </div>
+                        <script>
+                            CancelAdd()
+                        </script>
+                        教师列表
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>教师号</th>
+                                    <th>名字</th>
+                                    <th>操作(密码重置后为6个0)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{range .Teachers}}
+                                    <tr>
+                                        <td>{{.Number}}</td>
+                                        <td>{{.Name}}</td>
+                                        <td>
+                                            <a href="/admin/teacher_manager/delete?tid={{.Id}}">删除</a>
+                                            <button type="button" class="btn btn-default" onclick="ResetPwd({{.Id}})">重置密码</button>
+                                        </td>
+                                    </tr>
+                                {{end}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

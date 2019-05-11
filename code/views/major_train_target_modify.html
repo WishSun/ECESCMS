@@ -1,0 +1,129 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<style>
+    p{
+        font-family: 华文楷体;
+        font-size: 20px;
+        width: 800px;
+        text-indent: 40px;
+    }
+</style>
+
+<script type="text/javascript">
+    var Number = 1;
+
+    // 添加培养目标
+    function AddTrainTarget(){
+        var TrTNumber = $("#NumberText").val();
+        var TrTContent = $("#TrainTargetText").val();
+        // 添加新的元素
+        $("#TrTContainer").append('<label id="lbl'+Number+ '" >子项：</label>' + '<br id="br'+Number +'1">'+
+            '<input id="ipt'+ Number + '" name="TrTNumber" value="' + TrTNumber + '">'+ '<br id="br'+Number +'2">'+
+            '<textarea id="txt' + Number + '" name="TrTContent" rows="3" style="width:5 00px">'+TrTContent+'</textarea>' +
+            '<button id="btn'+Number+ '" type="button" onclick="Del('+Number+')">删除<br></button><br id="br'+Number +'3">');
+
+        // 每一个目标包含两个元素(TrTNumber和TrTContent)
+        Number += 1;
+        $("#NumberText").val("");
+        $("#TrainTargetText").val("");
+    }
+
+    function AddTrainTargetByContent(trt_number, trt_content){
+        // 添加新的元素
+        $("#TrTContainer").append('<label id="lbl'+Number+ '" >子项：</label>' + '<br id="br'+Number +'1">'+
+            '<input id="ipt'+ Number + '" name="TrTNumber" value="' + trt_number + '">'+ '<br id="br'+Number +'2">'+
+            '<textarea id="txt' + Number + '" name="TrTContent" rows="3" style="width:500px">'+trt_content+'</textarea>' +
+            '<button id="btn'+Number+ '" type="button" onclick="Del('+Number+')">删除<br></button><br id="br'+Number +'3">');
+
+        Number += 1;
+    }
+    // 删除培养目标项标签元素
+    function Del(id){
+        $("#"+"lbl"+id).remove()
+        $("#"+"ipt"+id).remove()
+        $("#"+"txt"+id).remove()
+        $("#"+"btn"+id).remove()
+        $("#"+"br"+id+"1").remove()
+        $("#"+"br"+id+"2").remove()
+        $("#"+"br"+id+"3").remove()
+    }
+</script>
+</head>
+
+
+{{template "body_header"}} <!-- 引入body头模板内容-->
+
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    调整培养目标
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form role="form" action="/admin/major_train_target_modify" method="POST">
+                                    <div class="container col-lg-12">
+                                        <h2>培养目标概述</h2><br>
+                                        <div style="margin-left: 50px">
+                                            <p>{{.Overview}}</p><br>
+                                        </div>
+
+                                        <h2>编辑培养目标</h2><br><br>
+                                        <div class="form-group col-lg-12" style="width:800px;margin-left: 50px">
+                                            <input type="hidden" name="mid" value="{{.Mid}}">  <!-- 隐藏控件，用来给post方法传递mid -->
+                                            <label>添加培养目标项：</label>
+                                            <label>自定义编号：</label>
+                                            <input id="NumberText" class="form-control">
+                                            <label>目标内容：</label>
+                                            <textarea id="TrainTargetText" class="form-control" rows="3"></textarea><br>
+                                            <button type="button" onclick="AddTrainTarget()">添加</button><br><br>
+                                            <label>已添加培养目标列表：</label>
+                                            <div id="TrTContainer" class="pre-scrollable" style="width:700px;height:200px;">
+                                                {{range .TrTs}}
+                                                    <script>
+                                                        AddTrainTargetByContent({{.Number}},{{.Content}})
+                                                    </script>
+                                                {{end}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: 600px;margin-left: 300px">
+                                        <button type="submit" class="btn btn-default">确定</button>
+                                        <button type="reset" class="btn btn-default">重置</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

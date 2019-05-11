@@ -11,5 +11,7 @@ func init() {
 	models.RegisterDB()
 }
 func main() {
+	// 设置开启session
+	beego.BConfig.WebConfig.Session.SessionOn = true
 	beego.Run()
 }

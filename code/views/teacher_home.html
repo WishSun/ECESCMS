@@ -1,0 +1,122 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<script type="text/javascript">
+    function PrintSpace() {
+        var ii=1;
+        for(ii = 0; ii < 20; ii++){
+            document.write("&nbsp")
+        }
+    }
+
+</script>
+
+</head>
+
+
+<body>
+
+<div class="navbar navbar-default top-navbar navbar-inverse" style="background-color: #222222">
+    <div class="container">
+        <div class="pull-left">
+            <img  src="../static/img/logo.png">
+        </div>
+    </div>
+</div>
+
+<div class="navbar-inverse navbar-side">
+    <nav class="navbar-inverse" style="width:260px;">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li>
+                    <a href="#">我的上课列表</a>
+                </li>
+                <li>
+                    <a href="#">修改密码</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    教师首页
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        我的课程列表
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>课程编号</th>
+                                    <th>课程名称</th>
+                                    <th style="text-align: center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="odd">
+                                    <td>0</td>
+                                    <td>1234</td>
+                                    <td>C语言程序设计</td>
+                                    <td style="text-align: center">
+                                        <a href="#">查看课程大纲</a>
+                                        <script>PrintSpace()</script>
+                                        <a href="#">修改课程大纲</a>
+                                        <script>PrintSpace()</script>
+                                        <a href="#">去上课</a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td>1</td>
+                                    <td>1123</td>
+                                    <td>软件需求分析</td>
+                                    <td style="text-align: center">
+                                        <a href="#">查看课程大纲</a>
+                                        <script>PrintSpace()</script>
+                                        <a href="#">修改课程大纲</a>
+                                        <script>PrintSpace()</script>
+                                        <a href="#">去上课</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>
