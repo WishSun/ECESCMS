@@ -1,5 +1,6 @@
 {{template "header"}}  <!-- 引入模板内容 -->
 <title>登录 工程认证教育体系课程管理系统</title>
+<script src="/static/js/jquery.js"></script>
 </head>
 
 <body>
@@ -22,11 +23,11 @@
         {{end}}
         <div class="form-group">
             <label>Account</label>
-            <input id="uname" class="form-control" placeholder="Enter account" name="uname">
+            <input id="unumber" class="form-control" placeholder="Enter account" name="unumber">
         </div>
         <div class="form-group">
             <label>Password</label>
-            <input id="pwd" type="password" class="form-control" placeholder="Password" name="pwd">
+            <input id="upwd" type="password" class="form-control" placeholder="Password" name="upwd">
         </div>
         <div class="checkbox">
             <label>
@@ -34,26 +35,36 @@
             </label>
         </div>
         <!-- 当onclick的值为false时表单就不会提交 -->
-        <button type="submit" class="btn btn-default" onclick="return checkInput();">登录</button>
+        <button type="button" class="btn btn-default" onclick="checkInput();">登录</button>
         <button class="btn btn-default" onclick="return backToHome();">返回</button>
     </form>
 
     <!-- 检查账号密码是否为空的JS代码-->
     <script type="text/javascript">
         function checkInput(){
-            var uname = document.getElementById("uname");
-            if(uname.value.length == 0) {
+            var number = document.getElementById("unumber");
+            if(number.value.length == 0) {
                 alert("请输入账号");
-                return false
+                return;
             }
 
-            var pwd = document.getElementById("pwd");
+            var pwd = document.getElementById("upwd");
             if(pwd.value.length == 0) {
                 alert("请输入密码");
-                return false
+                return;
             }
 
-            return true
+            $.post("/login/check_account",{
+                unumber:number.value,
+                upwd:pwd.value
+            },function(data){
+                // 登录成功
+                if(data.Code == 0){
+                    window.location = data.Url;
+                }else{
+                    alert("用户名或密码错误！");
+                }
+            },"json");
         }
 
         function backToHome(){

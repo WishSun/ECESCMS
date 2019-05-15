@@ -64,7 +64,7 @@ func (this *StudentManagerController) Post() {
 func (this *StudentManagerController) Add() {
 	number := this.Input().Get("SNumber")
 	name := this.Input().Get("SName")
-	majorName := this.Input().Get("SMajorInfo")
+	majorName := this.Input().Get("SMajorName")
 	class := this.Input().Get("SClass")
 	grade := this.Input().Get("SGrade")
 

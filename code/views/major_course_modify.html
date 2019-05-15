@@ -1,0 +1,84 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<style>
+    p{
+        font-size:20px;
+        font-family: 华文楷体;
+    }
+</style>
+</head>
+
+
+{{template "body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    为专业添加课程
+                </h1>
+                <br><br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="margin-left: 20px">
+                        <div class="form-group">
+                            <form action="/admin/major_course_modify" method="post">
+                                <h3>选择课程</h3><br><br>
+                                <input type="hidden" name="Mid" value="{{.Mid}}">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>课程编号</th>
+                                        <th>课程中文名</th>
+                                        <th>课程英文名</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{range .Courses}}
+                                    <tr>
+                                        <td>{{.Number}}</td>
+                                        <td>{{.NameCN}}</td>
+                                        <td>{{.NameEN}}</td>
+                                        <td>
+                                            <label>
+                                                <input type="checkbox" style="zoom: 200%" name="MCourses" value="{{.Id}}">
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    {{end}}
+                                    </tbody>
+                                </table>
+                            <button type="submit">提交修改</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

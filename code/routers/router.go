@@ -8,6 +8,7 @@ import (
 func init() {
 	beego.Router("/", &controllers.HomeController{})
 	beego.Router("/login", &controllers.LoginController{})
+	beego.Router("/login/check_account", &controllers.LoginController{}, "post:CheckAccount")
 
 	beego.Router("/admin_home", &controllers.AdminHomeController{})
 	beego.Router("/teacher_home", &controllers.TeacherHomeController{})
@@ -32,6 +33,10 @@ func init() {
 	beego.Router("/admin/major_gr_ip", &controllers.MajorGRIPController{})
 	// 毕业要求指标点调整
 	beego.Router("/admin/major_gr_ip_modify", &controllers.MajorGRIPModifyController{})
+	// 专业课程
+	beego.Router("/admin/major_course", &controllers.MajorCourseController{})
+	// 专业课程调整
+	beego.Router("/admin/major_course_modify", &controllers.MajorCourseModifyController{})
 	// 显示专业大纲
 	beego.Router("/admin/major_view", &controllers.MajorViewController{})
 
@@ -50,11 +55,19 @@ func init() {
 
 	// 教师选课管理
 	beego.Router("/admin/teacher_select_course_manager", &controllers.TeacherSelectCourseManagerController{})
-
+	beego.Router("/admin/teacher_select_course_view", &controllers.TeacherSelectCourseViewController{})
+	beego.Router("/admin/teacher_select_course_modify", &controllers.TeacherSelectCourseModifyController{})
 	// 学生信息管理
 	beego.Router("/admin/student_manager", &controllers.StudentManagerController{})
 	beego.Router("/admin/student_manager/add", &controllers.StudentManagerController{}, "post:Add")
 	beego.Router("/admin/student_manager/delete", &controllers.StudentManagerController{}, "get:Delete")
 	beego.Router("/admin/student_manager/modify", &controllers.StudentManagerController{}, "post:Modify")
 
+	//教师我的课程管理
+	beego.Router("/teacher/my_course_manager", &controllers.MyCourseManagerController{})
+	beego.Router("/teacher/my_course_teach_target", &controllers.MyCourseTeachTargetController{})
+	beego.Router("/teacher/my_course_teach_target/add_teach_target", &controllers.MyCourseTeachTargetController{}, "post:AddTeachTarget")
+	beego.Router("/teacher/my_course_teach_target/get_gr_and_ip", &controllers.MyCourseTeachTargetController{}, "post:GetGRAndIP")
+	beego.Router("/teacher/my_course_teach_target/modify_teach_target", &controllers.MyCourseTeachTargetController{}, "post:ModifyTeachTarget")
+	beego.Router("/teacher/my_course_teach_target/delete", &controllers.MyCourseTeachTargetController{}, "get:DeleteTeachTarget")
 }

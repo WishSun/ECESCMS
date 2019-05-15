@@ -1,0 +1,108 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<style>
+    p{
+        font-size:20px;
+        font-family: 华文楷体;
+    }
+
+    .myDiv{
+        margin-left: 50px
+    }
+</style>
+</head>
+
+
+{{template "body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    课程大纲信息
+                </h1>
+                <a href="/teacher/my_course_outline_modify?tscid={{.Cid}}" style="font-size: 20px">调整课程大纲信息</a>
+                <br><br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="margin-left: 20px">
+                        {{with .Course}}
+                            <br><hr>
+                            <h3>课程号：</h3>
+                            <div class="myDiv">
+                                <p>{{.Number}}</p>
+                                <br>
+                            </div>
+
+                            <h3>课程中文名称：</h3>
+                            <div class="myDiv">
+                                <p>{{.NameCN}}</p>
+                                <br>
+                            </div>
+
+                            <h3>课程英文名称：</h3>
+                            <div class="myDiv">
+                                <p>{{.NameEN}}</p>
+                                <br>
+                            </div>
+
+                            <h3>知识领域：</h3>
+                            <div class="myDiv">
+                                <p>{{.KnowledgeField}}</p>
+                                <br>
+                            </div>
+
+                            <h3>先修课程：</h3>
+                            <div class="myDiv">
+                                <p>{{.PreparatoryCourse}}</p>
+                                <br>
+                            </div>
+
+                            <h3>推荐教材：</h3>
+                            <div class="myDiv">
+                                <p>{{.RecommendTextBook}}</p>
+                                <br>
+                            </div>
+
+                            <h3>参考书目与文献：</h3>
+                            <div class="myDiv">
+                                <p>{{.ReferenceBook}}</p>
+                                <br>
+                            </div>
+
+                            <h3>主要相关网站：</h3>
+                            <div class="myDiv">
+                                <p>{{.RelativeWebsite}}</p>
+                                <br>
+                            </div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

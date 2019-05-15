@@ -1,0 +1,100 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+</head>
+
+<body style="background-color:#222222;">
+<div class="navbar navbar-default top-navbar navbar-inverse" style="background-color: #222222">
+    <div class="container">
+        <div class="pull-left">
+            <img  src="../static/img/logo.png">
+        </div>
+        <div class="pull-right" style="margin-top: 30px">
+            <ul class="nav navbar-nav"  style="margin-top: 10px">
+                <li><div style="color:whitesmoke;font-size: 130%;font-family: 宋体">{{.TeacherName}} 老师</div></li>
+                <li><div style="margin-left:10px;color:whitesmoke;font-size: 130%;font-family: 宋体"><a href="/login?obj=admin">退出</a></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{{template "teacher_body_header"}} <!-- 引入body头模板内容-->
+
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1  class="page-header">
+                    我的课程管理
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        我的课程列表
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th>课程编号</th>
+                                    <th>课程名称</th>
+                                    <th>年级</th>
+                                    <th>专业</th>
+                                    <th style="text-align: center;width:350px">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{range .CourseList}}
+                                    <tr class="odd">
+                                        <td>{{.CourseNumber}}</td>
+                                        <td><a href="/teacher/my_course_outline_view?tscid={{.TSCId}}">{{.CourseName}}</a></td>
+                                        <td>{{.Grade}}</td>
+                                        <td>{{.MajorName}}</td>
+                                        <td>
+                                            <span style="margin-left: 10px">
+                                                <a href="#">基本信息</a>
+                                            </span>
+                                            <span style="margin-left: 10px">
+                                                <a href="/teacher/my_course_teach_target?tscid={{.TSCId}}">教学目标</a>
+                                            </span>
+                                            <span style="margin-left: 10px">
+                                                <a href="#">教学内容</a>
+                                            </span>
+                                            <span style="margin-left: 10px">
+                                                <a href="#">管理课程活动</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {{end}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

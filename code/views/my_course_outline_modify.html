@@ -1,0 +1,113 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+</head>
+
+
+{{template "body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    修改课程大纲信息
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        课程大纲信息
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <!-- display:none设置控件隐藏，display:block设置控件显示-->
+                                <form role="form" action="/admin/course_add" method="POST">
+                                    {{with .Course}}
+                                        <div class="form-group" style="width: 400px;margin-left: 100px">
+                                            <label>课程号：</label>
+                                            <input class="form-control" name="CourseNumber" value="{{.Number}}">
+                                            <p class="help-block">例如：11223</p>
+                                            <label>课程中文名称：</label>
+                                            <input class="form-control" name="CourseNameCN" value="{{.NameCN}}">
+                                            <p class="help-block">例如：软件工程</p>
+                                            <label>课程英文名称：</label>
+                                            <input class="form-control" name="CourseNameEN" value="{{.NameEN}}">
+                                            <p class="help-block">例如：软件工程</p>
+
+                                            <div class="form-group" style="width: 600px;">
+                                                <div class="form-group">
+                                                    <label style="font-size:15px">知识领域：</label><br>
+                                                    <select class="form-control" style="width:200px" name="CourseKnowledgeField" value="{{.KnowledgeField}}">
+                                                        <option>通识教育</option>
+                                                        <option>学科基础教育</option>
+                                                        <option>专业教育</option>
+                                                        <option>主要实践性教学环节</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label style="font-size:15px">适用专业：</label>
+                                                    <select class="form-control" style="width:200px" name="CourseUsedMajors" value="{{.UsedMajors}}">
+                                                        <option>软件工程</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label style="font-size:15px">先修课程：</label><br>
+                                                    <textarea class="form-control" rows="4" name="CoursePreparatoryCourse">{{.PreparatoryCourse}}</textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label style="font-size:15px">推荐教材</label><br>
+                                                    <textarea class="form-control" rows="4"  name="CourseRecommendTextBook">{{.RecommendTextBook}}</textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label style="font-size:15px">参考书目与文献</label><br>
+                                                    <textarea class="form-control" rows="4"  name="CourseReferenceBook">{{.ReferenceBook}}</textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label style="font-size:15px">主要相关网站</label><br>
+                                                    <textarea class="form-control" rows="4" wrap="virtual" name="CourseRelativeWebsite" >{{.RelativeWebsite}}</textarea>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    {{end}}
+                                    <br><br>
+                                    <div style="width: 600px;margin-left: 400px">
+                                        <button type="submit" class="btn btn-default">确定</button>
+                                        <button type="reset" class="btn btn-default">重置</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

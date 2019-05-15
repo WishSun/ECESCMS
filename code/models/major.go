@@ -2,6 +2,7 @@ package models
 
 import (
 	"ECESCMS/code/common"
+	"fmt"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"strconv"
@@ -57,6 +58,25 @@ func GetAllMajor() ([]*Major, error) {
 	qs := o.QueryTable("Major")
 	_, err := qs.All(&majors)
 	return majors, err
+}
+
+// 获取专业所有课程
+func GetMajorAllCourse(mid string) ([]Course, error) {
+	o := orm.NewOrm()
+
+	major_courses := make([]Course, 0)
+	_, err := o.Raw(
+		fmt.Sprintf("SELECT * FROM course WHERE id IN (SELECT course_id FROM major_map_course WHERE major_id=%s)", mid)).QueryRows(&major_courses)
+	return major_courses, err
+}
+
+// 根据mmcId获取专业名称
+func GetMajorNameByMMCId(mmcId string)(string, error){
+	o := orm.NewOrm()
+
+	var major_name string
+	_, err := o.Raw("select name from major where id in (select major_id from major_map_course where id=?)", mmcId).QueryRows(&major_name)
+	return major_name, err
 }
 
 // 获取专业所有培养目标点以及目标概述
@@ -246,6 +266,39 @@ func ModifyMajorGRIP(ips []*common.GRIPType, grid string) error {
 		if err != nil {
 			return err
 		}
+	}
+	return nil
+}
+
+// 修改专业课程
+func ModifyMajorCourses(mid string, cids []string) error {
+	midNum, err := strconv.ParseInt(mid, 10, 64)
+	if err != nil {
+		return err
+	}
+	o := orm.NewOrm()
+	// 删除之前的专业课程
+	_, err = o.Raw("delete from major_map_course where major_id=?", midNum).Exec()
+	if err != nil {
+		return err
+	}
+
+	// 添加新的专业课程
+	for _, cid := range cids {
+		logs.Info("新课程:[%s]", cid)
+		cidNum, err := strconv.ParseInt(cid, 10, 64)
+		if err != nil {
+			return err
+		}
+		mmc := &MajorMapCourse{
+			Major_id:  midNum,
+			Course_id: cidNum,
+		}
+		_, err = o.Insert(mmc)
+		if err != nil {
+			return err
+		}
+		logs.Info("插入成功！")
 	}
 	return nil
 }

@@ -8,4 +8,6 @@ type TeacherHomeController struct {
 
 func (this *TeacherHomeController) Get() {
 	this.TplName = "teacher_home.html"
+	this.Data["TeacherName"] = this.GetSession("teacher_name")
+
 }

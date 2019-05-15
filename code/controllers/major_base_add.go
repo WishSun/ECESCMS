@@ -13,6 +13,13 @@ type MajorBaseAddController struct {
 
 func (this *MajorBaseAddController) Get() {
 	this.TplName = "major_base_add.html"
+
+	courses, err := models.GetAllCourse()
+	if err != nil {
+		logs.Error(err)
+	}
+
+	this.Data["Courses"] = courses
 }
 
 func (this *MajorBaseAddController) Post() {

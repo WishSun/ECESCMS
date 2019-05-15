@@ -1,0 +1,92 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>专业派课调整</title>
+
+<script type="text/javascript">
+
+    function SetInitVal(id, val){
+        $("#"+id).val(val)
+    }
+</script>
+</head>
+
+
+{{template "body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    调整{{.MajorName}}专业{{.Grade}}级派课
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        派课列表
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form action="/admin/teacher_select_course_modify" method="post">
+                                <input type="hidden" name="Mid" value="{{.Mid}}">
+                                <input type="hidden" name="Grade" value="{{.Grade}}">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th>课程编号</th>
+                                    <th>课程名称</th>
+                                    <th>选择教师</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {{$teachers := .Teachers}}
+                                {{range .TSCs}}
+                                    <tr class="odd">
+                                        <td><input type="hidden" name="CourseId" value="{{.CourseId}}">{{.CourseNumber}}</td>
+                                        <td>{{.CourseName}}</td>
+                                        <td>
+                                            <select id="TeacherSelect{{.CourseNumber}}" name="TeacherInfo" class="form-control" style="width:200px">
+                                                {{range $teachers}}
+                                                    <option>{{.Number}}-{{.Name}}</option>
+                                                {{end}}
+                                            </select>
+                                            <script>
+                                                SetInitVal("TeacherSelect{{.CourseNumber}}", "{{.TeacherNumber}}-{{.TeacherName}}")
+                                            </script>
+                                        </td>
+                                    </tr>
+                                {{end}}
+                                </tbody>
+                            </table>
+                                <button type="submit">提交修改</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

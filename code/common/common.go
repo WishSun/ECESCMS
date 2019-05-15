@@ -15,3 +15,20 @@ type GRType struct {
 	GRName        string
 	GRDescription string
 }
+
+type TSCType struct {
+	CourseId      int64
+	CourseNumber  string
+	CourseName    string
+	TeacherNumber string
+	TeacherName   string
+}
+
+// 教师我的课程列表数据结构
+type TSCListType struct{
+	TSCId int64
+	CourseNumber string
+	CourseName string
+	Grade string
+	MajorName string
+}

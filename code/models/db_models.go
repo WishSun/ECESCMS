@@ -122,25 +122,25 @@ type Teacher struct {
 
 // 教师选课表
 type TeacherSelectCourse struct {
-	Id                     int64  `orm:"column(id);auto"`                   // 自增编号
-	Course_id              int64  `orm:"column(course_id)"`                 // 课程编号
-	Teacher_id             int64  `orm:"column(teacher_id)"`                // 教师编号
-	Major_id               int64  `orm:"column(major_id)"`                  // 开课专业编号
-	Term                   int64  `orm:"column(term)"`                      // 开设学期
-	credit                 int64  `orm:"column(credit)"`                    // 学分
-	TestMethod             string `orm:"column(test_method)"`               // 考核方式
-	TotalPeriod            int64  `orm:"column(total_period)"`              // 总学时
-	TheoryPeriod           int64  `orm:"column(theory_period)"`             // 理论学时
-	ExperimentalPeriod     int64  `orm:"column(experimental_period)"`       // 实验学时
-	ComputerPeriod         int64  `orm:"column(computer_period)"`           // 上机学时
-	PracticePeriod         int64  `orm:"column(practice_period)"`           // 实践学时
-	WeekPeriod             int64  `orm:"column(week_period)"`               // 周学时
-	ContentRelationImgPath string `orm:"column(content_relation_img_path)"` // 教学内容关系图路径
-	TeachTargetOverview    string `orm:"column(teach_target_overview)"`     // 教学目标总纲
-	CourseTask             string `orm:"column(course_task)"`               // 课程性质、目的、任务
-	TeachMethod            string `orm:"column(teach_method)"`              // 教学方法
-	RelationOtherCourse    string `orm:"column(relation_other_course)"`     // 与其他课程的关系
-	Category               string `orm:"column(category)"`                  // 课程类别(性质)
+	Id                     int64  `orm:"column(id);auto"`                        // 自增编号
+	MMC_id                 int64  `orm:"column(mmc_id)"`                         // 专业课程对应编号
+	Teacher_id             int64  `orm:"column(teacher_id)"`                     // 教师编号
+	Grade                  string `orm:"column(grade)"`                          // 年级
+	Term                   int64  `orm:"column(term);null"`                      // 开设学期
+	Credit                 int64  `orm:"column(credit);null"`                    // 学分
+	TestMethod             string `orm:"column(test_method);null"`               // 考核方式
+	TotalPeriod            int64  `orm:"column(total_period);null"`              // 总学时
+	TheoryPeriod           int64  `orm:"column(theory_period);null"`             // 理论学时
+	ExperimentalPeriod     int64  `orm:"column(experimental_period);null"`       // 实验学时
+	ComputerPeriod         int64  `orm:"column(computer_period);null"`           // 上机学时
+	PracticePeriod         int64  `orm:"column(practice_period);null"`           // 实践学时
+	WeekPeriod             int64  `orm:"column(week_period);null"`               // 周学时
+	ContentRelationImgPath string `orm:"column(content_relation_img_path);null"` // 教学内容关系图路径
+	TeachTargetOverview    string `orm:"column(teach_target_overview);null"`     // 教学目标总纲
+	CourseTask             string `orm:"column(course_task);null"`               // 课程性质、目的、任务
+	TeachMethod            string `orm:"column(teach_method);null"`              // 教学方法
+	RelationOtherCourse    string `orm:"column(relation_other_course);null"`     // 与其他课程的关系
+	Category               string `orm:"column(category);null"`                  // 课程类别(性质)
 }
 
 // 教学内容表
@@ -161,6 +161,7 @@ type TeachContent struct {
 type TeachTarget struct {
 	Id          int64  `orm:"column(id);auto"`                                             // 教学目标自增编号
 	TSC_id      int64  `orm:"column(TSC_id);description(TSC意为TeacherSelectCourse, 即教师选课)"` // 教师选课编号
+	Number      string `orm:"column(number)"`                                              // 教学目标自编号
 	Description string `orm:"column(description)"`                                         // 目标描述
 }
 
