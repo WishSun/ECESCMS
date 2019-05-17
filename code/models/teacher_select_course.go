@@ -3,6 +3,7 @@ package models
 import (
 	"ECESCMS/code/common"
 	"github.com/astaxie/beego/orm"
+	"strconv"
 	"strings"
 )
 
@@ -14,6 +15,19 @@ func GetAllGrade() ([]string, error) {
 	_, err := o.Raw("select distinct grade from student").QueryRows(&grades)
 
 	return grades, err
+}
+
+// 根据id获取选课课程基本信息
+func GetTSCBaseById(tscid string)(*TeacherSelectCourse, error){
+	o := orm.NewOrm()
+	tsc := &TeacherSelectCourse{}
+	tscidNum, err := strconv.ParseInt(tscid, 10, 64)
+	if err != nil{
+		return tsc, err
+	}
+
+	err = o.Raw("select * from teacher_select_course where id=?", tscidNum).QueryRow(&tsc)
+	return tsc, err
 }
 
 // 获取专业的所有教师选课
@@ -79,4 +93,75 @@ func ModifyMajorTSC(mid, grade string, CourseIds, teacherInfos []string) error {
 		}
 	}
 	return nil
+}
+
+// 修改选课课程基本信息
+func ModifyTSCBase(_Tscid, _Term, _Credit, _TestMethod, _TotalPeriod, _TheoryPeriod, _ExperimentalPeriod, _ComputerPeriod,
+	_PracticePeriod, _WeekPeriod, _ContentRelationImgPath, _TeachTargetOverview, _ClassroomTeachTargetOverview,
+	_ExperimentTeachTargetOverview, _CourseTask, _TeachMethod, _RelationOtherCourse, _Category string)error{
+	// 将数值字段的string转为int64
+	tscid, err := strconv.ParseInt(_Tscid, 10, 64)
+	if err != nil {
+		return err
+	}
+	term, err := strconv.ParseInt(_Term, 10, 64)
+	if err != nil {
+		return err
+	}
+	credit, err := strconv.ParseInt(_Credit, 10, 64)
+	if err != nil {
+		return err
+	}
+	totalPeriod, err := strconv.ParseInt(_TotalPeriod, 10, 64)
+	if err != nil {
+		return err
+	}
+	theoryPeriod, err := strconv.ParseInt(_TheoryPeriod, 10, 64)
+	if err != nil {
+		return err
+	}
+	experimentalPeriod, err := strconv.ParseInt(_ExperimentalPeriod, 10, 64)
+	if err != nil {
+		return err
+	}
+	computerPeriod, err := strconv.ParseInt(_ComputerPeriod, 10, 64)
+	if err != nil {
+		return err
+	}
+	practicePeriod, err := strconv.ParseInt(_PracticePeriod, 10, 64)
+	if err != nil {
+		return err
+	}
+	weekPeriod, err := strconv.ParseInt(_WeekPeriod, 10, 64)
+	if err != nil {
+		return err
+	}
+	o := orm.NewOrm()
+	tsc := &TeacherSelectCourse{Id: tscid}
+
+	// Read方法会检测major哪些字段被赋非0值，然后按照这些值的限定去查找匹配的记录
+	err = o.Read(tsc)
+	if err == nil {
+		tsc.Term = term
+		tsc.Credit = credit
+		tsc.TestMethod = _TestMethod
+		tsc.TotalPeriod = totalPeriod
+		tsc.TheoryPeriod = theoryPeriod
+		tsc.ExperimentalPeriod = experimentalPeriod
+		tsc.ComputerPeriod = computerPeriod
+		tsc.PracticePeriod = practicePeriod
+		tsc.WeekPeriod = weekPeriod
+		tsc.ContentRelationImgPath = _ContentRelationImgPath
+		tsc.TeachTargetOverview = _TeachTargetOverview
+		tsc.ClassroomTeachTargetOverview = _ClassroomTeachTargetOverview
+		tsc.ExperimentTeachTargetOverview = _ExperimentTeachTargetOverview
+		tsc.CourseTask = _CourseTask
+		tsc.TeachMethod = _TeachMethod
+		tsc.RelationOtherCourse = _RelationOtherCourse
+		tsc.Category = _Category
+
+		_, err = o.Update(tsc) // 将修改更新到数据库
+		return err
+	}
+	return err
 }

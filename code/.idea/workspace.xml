@@ -2,44 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0434f303-7862-4fff-aed2-8b79edee8cfe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/major_course.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/major_course_modify.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/my_course_manager.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/my_course_modify_supt_ip.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/my_course_teach_target.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/teacher_select_course_modify.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/teacher_select_course_view.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/my_course.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/teacher_select_course.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/T.teacher_body_header.tpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/major_course.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/major_course_modify.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/my_course_manager.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/my_course_modify_supt_ip.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/my_course_outline_modify.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/my_course_outline_view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/my_course_teach_target.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/teacher_select_course_modify.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/teacher_select_course_view.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/my_course_base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/my_course_base_modify.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/my_course_base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/my_course_base_modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code.exe" beforeDir="false" afterPath="$PROJECT_DIR$/code.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/common/common.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/app.conf" beforeDir="false" afterPath="$PROJECT_DIR$/conf/app.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/major_base_add.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/major_base_add.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/student_manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/student_manager.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/teacher_home.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/teacher_home.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/teacher_select_course_manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/teacher_select_course_manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/my_course_modify_supt_ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/my_course_modify_supt_ip.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/my_course_teach_target.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/my_course_teach_target.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/db_models.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/db_models.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/major.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/major.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/teacher.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/my_course.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/my_course.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/teacher_select_course.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/teacher_select_course.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/T.body_header.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/views/T.admin_body_header.tpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/major_GR.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/major_GR.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/major_manager.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/major_manager.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/teacher_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/teacher_home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/teacher_select_course_manager.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/teacher_select_course_manager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/my_course_manager.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/my_course_manager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/my_course_modify_supt_ip.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/my_course_modify_supt_ip.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/my_course_teach_target.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/my_course_teach_target.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../毕设材料/设计/毕设数据库设计.erwin" beforeDir="false" afterPath="$PROJECT_DIR$/../毕设材料/设计/毕设数据库设计.erwin" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,113 +29,47 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routers/router.go">
+        <entry file="file://$PROJECT_DIR$/controllers/my_course_base_modify.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="70" column="141" selection-start-line="70" selection-start-column="141" selection-end-line="70" selection-end-column="141" />
+            <state relative-caret-position="211">
+              <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+              <folding>
+                <element signature="e#21#92#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/controllers/my_course_teach_target.go">
+        <entry file="file://$PROJECT_DIR$/views/my_course_base_modify.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+            <state relative-caret-position="237">
+              <caret line="159" column="34" lean-forward="true" selection-start-line="159" selection-start-column="34" selection-end-line="159" selection-end-column="34" />
               <folding>
-                <element signature="e#21#82#0" expanded="true" />
-                <element signature="n#!!block;n#GetGRAndIP#0" />
+                <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/my_course_teach_target.html">
+        <entry file="file://$PROJECT_DIR$/views/my_course_manager.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="171" column="90" selection-start-line="171" selection-start-column="66" selection-end-line="171" selection-end-column="90" />
-              <folding>
-                <element signature="e#338#1090#0#HTML" />
-                <element signature="n#style#0;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#body#0;n#!!top" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="325">
+              <caret line="59" column="87" lean-forward="true" selection-start-line="59" selection-start-column="80" selection-end-line="59" selection-end-column="87" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/my_course_modify_supt_ip.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/my_course_modify_supt_ip.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/my_course.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+            <state relative-caret-position="340">
+              <caret line="245" column="154" selection-start-line="244" selection-start-column="36" selection-end-line="245" selection-end-column="154" />
               <folding>
-                <element signature="e#16#69#0" expanded="true" />
-                <element signature="n#!!block;n#GetTSCTeachTargetGRAndIP#0" />
-                <element signature="n#!!block;n#AddTeachTarget#0" />
-                <element signature="n#!!block;n#ModifyTeachTarget#0" />
-                <element signature="n#!!block;n#DeleteTeachTarget#0" />
+                <element signature="n#style#0;n#select#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/teacher.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="110" column="14" selection-start-line="99" selection-start-column="4" selection-end-line="110" selection-end-column="14" />
-              <folding>
-                <element signature="n#!!block;n#CheckTeacherAccount#0" />
-                <element signature="n#!!block;n#AddTeacher#0" />
-                <element signature="n#!!block;n#GetAllTeacher#0" />
-                <element signature="n#!!block;n#GetTeacher#0" />
-                <element signature="n#!!block;n#GetTeacherCourseList#0" />
-                <element signature="n#!!block;n#ResetTeacherPwd#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/major_GR.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="831">
-              <caret line="75" column="43" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/db_models.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="162" column="10" selection-start-line="162" selection-start-column="4" selection-end-line="162" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -170,6 +83,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>IndicatorPointSelect</find>
+    </findStrings>
+  </component>
   <component name="GOROOT" path="D:\Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -180,8 +98,6 @@
         <option value="$PROJECT_DIR$/views/teacher_select_course_view.html" />
         <option value="$PROJECT_DIR$/views/teacher_select_course_modify.html" />
         <option value="$PROJECT_DIR$/controllers/teacher_select_course_modify.go" />
-        <option value="$PROJECT_DIR$/models/teacher_select_course.go" />
-        <option value="$PROJECT_DIR$/models/major.go" />
         <option value="$PROJECT_DIR$/views/T.admin_body_header.tpl" />
         <option value="$PROJECT_DIR$/conf/app.conf" />
         <option value="$PROJECT_DIR$/main.go" />
@@ -197,24 +113,21 @@
         <option value="$PROJECT_DIR$/views/my_course_outline_modify.html" />
         <option value="$PROJECT_DIR$/common/common.go" />
         <option value="$PROJECT_DIR$/models/teacher.go" />
+        <option value="$PROJECT_DIR$/views/major_GR.html" />
+        <option value="$PROJECT_DIR$/models/major.go" />
         <option value="$PROJECT_DIR$/views/my_course_manager.html" />
         <option value="$PROJECT_DIR$/models/db_models.go" />
-        <option value="$PROJECT_DIR$/views/major_GR.html" />
         <option value="$PROJECT_DIR$/models/my_course.go" />
+        <option value="$PROJECT_DIR$/views/my_course_modify_supt_ip.html" />
         <option value="$PROJECT_DIR$/controllers/my_course_teach_target.go" />
-        <option value="$PROJECT_DIR$/routers/router.go" />
         <option value="$PROJECT_DIR$/views/my_course_teach_target.html" />
+        <option value="$PROJECT_DIR$/models/teacher_select_course.go" />
+        <option value="$PROJECT_DIR$/views/my_course_base.html" />
+        <option value="$PROJECT_DIR$/routers/router.go" />
+        <option value="$PROJECT_DIR$/controllers/my_course_base.go" />
         <option value="$PROJECT_DIR$/controllers/my_course_modify_supt_ip.go" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/code.iml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/controllers/my_course_base_modify.go" />
+        <option value="$PROJECT_DIR$/views/my_course_base_modify.html" />
       </list>
     </option>
   </component>
@@ -278,6 +191,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
@@ -331,7 +245,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24962178" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22768533" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -340,8 +254,8 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.29787233" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.22094926" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -355,22 +269,6 @@
     <option name="version" value="1" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/controllers/teacher_select_course_modify.go</url>
-          <line>47</line>
-          <properties />
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/models/my_course.go</url>
-          <line>28</line>
-          <properties />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="GoApplicationRunConfiguration">
         <watch expression="ts[1]" language="go" />
@@ -397,47 +295,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/course_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="47" column="57" selection-start-line="42" selection-start-column="48" selection-end-line="47" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/major_GR_IP.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/teacher_select_course_view.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/teacher_select_course_modify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="32" column="77" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="77" />
-          <folding>
-            <element signature="n#table#0;n#form#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../github.com/astaxie/beego/router.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
           <caret line="830" selection-start-line="830" selection-end-line="830" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/teacher_select_course_modify.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="43" column="38" selection-start-line="43" selection-start-column="38" selection-end-line="43" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!block;n#Get#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -448,38 +309,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/major.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="80" selection-start-line="80" selection-end-line="80" />
-          <folding>
-            <element signature="n#!!block;n#GetMajorAllCourse#0" />
-            <element signature="n#!!block;n#GetMajorNameById#0" />
-            <element signature="n#!!block;n#GetMajorAllTrainTarget#0" />
-            <element signature="n#!!block;n#GetMajorAllGraduationRequirement#0" />
-            <element signature="n#!!block;n#GetMajorGRAllIndicatorPoint#0" />
-            <element signature="n#!!block;n#GetMajorBase#0" />
-            <element signature="n#!!block;n#ModifyMajorTrainTarget#0" />
-            <element signature="n#!!block;n#ModifyMajorBase#0" />
-            <element signature="n#!!block;n#ModifyGraduationRequirement#0" />
-            <element signature="n#!!block;n#ModifyMajorGRIP#0" />
-            <element signature="n#!!block;n#ModifyMajorCourses#0" />
-            <element signature="n#!!block;n#DeleteMajor#0" />
-            <element signature="n#!!block;n#DeleteGraduationRequirement#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/T.admin_body_header.tpl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/major_course_modify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-300" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/course.go">
@@ -515,27 +349,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-25">
           <caret line="5" column="6" lean-forward="true" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Go/src/net/url/url.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="843" selection-start-line="843" selection-end-line="843" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../github.com/astaxie/beego/controller.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="388" selection-start-line="388" selection-end-line="388" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/teacher_manager.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -599,20 +412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/course_modify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" lean-forward="true" selection-end-line="112" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/common.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/login.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -645,33 +444,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/my_course_manager.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="62" column="105" selection-start-line="62" selection-start-column="88" selection-end-line="62" selection-end-column="105" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/my_course_manager.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="15" column="4" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/student_manager.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -682,29 +454,29 @@
     <entry file="file://$PROJECT_DIR$/controllers/major_GR.go">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/teacher_select_course.go">
+    <entry file="file://$PROJECT_DIR$/views/major_GR.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="45" column="1" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!block;n#GetAllGrade#0" />
-            <element signature="n#!!block;n#GetMajorAllSelectCourse#0" />
-            <element signature="n#!!block;n#ModifyMajorTSC#0" />
-          </folding>
+        <state relative-caret-position="-744">
+          <caret line="75" column="43" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/major_GR.html">
+    <entry file="file://$PROJECT_DIR$/views/major_course_modify.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="831">
-          <caret line="75" column="43" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="43" />
+        <state relative-caret-position="-900" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/teacher_select_course_modify.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="47" column="26" lean-forward="true" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/teacher.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="110" column="14" selection-start-line="99" selection-start-column="4" selection-end-line="110" selection-end-column="14" />
+        <state relative-caret-position="137">
+          <caret line="50" column="49" selection-start-line="50" selection-start-column="49" selection-end-line="50" selection-end-column="49" />
           <folding>
             <element signature="n#!!block;n#CheckTeacherAccount#0" />
             <element signature="n#!!block;n#AddTeacher#0" />
@@ -725,82 +497,243 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/major_GR_IP_modify.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-375">
+        <state relative-caret-position="-1200">
+          <caret line="6" column="12" lean-forward="true" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/course_modify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
           <folding>
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/teacher_manager.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-233">
+          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/common.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/major_base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="8" column="11" lean-forward="true" selection-end-line="119" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/major_train_target_modify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-750">
+          <folding>
+            <element signature="n#style#0;n#textarea#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../github.com/astaxie/beego/controller.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="388" selection-start-line="388" selection-end-line="388" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Go/src/net/url/url.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="841" selection-start-line="841" selection-end-line="841" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/my_course.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+        <state relative-caret-position="342">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
-            <element signature="e#16#69#0" expanded="true" />
-            <element signature="n#!!block;n#GetTSCTeachTargetGRAndIP#0" />
+            <element signature="n#!!block;n#GetGRAndIPs#0" />
+            <element signature="n#!!block;n#GetIP#0" />
+            <element signature="n#!!block;n#GetTSCTeachTarget#0" />
             <element signature="n#!!block;n#AddTeachTarget#0" />
             <element signature="n#!!block;n#ModifyTeachTarget#0" />
-            <element signature="n#!!block;n#DeleteTeachTarget#0" />
+            <element signature="n#!!block;n#ModifyTeachtargetSuptIP#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/my_course_teach_target.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="150" column="139" selection-start-line="150" selection-start-column="139" selection-end-line="150" selection-end-column="139" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/major_base_modify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="84" column="56" lean-forward="true" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/major.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="237" column="14" lean-forward="true" selection-start-line="197" selection-start-column="4" selection-end-line="237" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!block;n#AddMajor#0" />
+            <element signature="n#!!block;n#AddGraduationRequirement#0" />
+            <element signature="n#!!block;n#GetAllMajor#0" />
+            <element signature="n#!!block;n#GetMajorAllCourse#0" />
+            <element signature="n#!!block;n#GetMajorNameByMMCId#0" />
+            <element signature="n#!!block;n#GetMajorIdByMajorName#0" />
+            <element signature="n#!!block;n#GetMajorAllTrainTarget#0" />
+            <element signature="n#!!block;n#GetMajorAllGraduationRequirement#0" />
+            <element signature="n#!!block;n#GetMajorGRAllIndicatorPoint#0" />
+            <element signature="n#!!block;n#GetMajorBase#0" />
+            <element signature="n#!!block;n#ModifyMajorTrainTarget#0" />
+            <element signature="n#!!block;n#ModifyGraduationRequirement#0" />
+            <element signature="n#!!block;n#ModifyMajorGRIP#0" />
+            <element signature="n#!!block;n#ModifyMajorCourses#0" />
+            <element signature="n#!!block;n#DeleteMajor#0" />
+            <element signature="n#!!block;n#DeleteGraduationRequirement#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/db_models.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="162" column="10" selection-start-line="162" selection-start-column="4" selection-end-line="162" selection-end-column="10" />
+        <state relative-caret-position="475">
+          <caret line="144" column="12" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/teacher_select_course.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
+          <folding>
+            <element signature="n#!!block;n#GetAllGrade#0" />
+            <element signature="n#!!block;n#GetTSCBaseById#0" />
+            <element signature="n#!!block;n#GetMajorAllSelectCourse#0" />
+            <element signature="n#!!block;n#ModifyMajorTSC#0" />
+            <element signature="n#!!block;n#ModifyTSCBase#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routers/router.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="70" column="141" selection-start-line="70" selection-start-column="141" selection-end-line="70" selection-end-column="141" />
+        <state relative-caret-position="436">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/my_course_modify_supt_ip.go">
+    <entry file="file://$PROJECT_DIR$/views/my_course_base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="225">
+          <caret line="39" column="55" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/my_course_modify_supt_ip.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/my_course_teach_target.html">
+    <entry file="file://$PROJECT_DIR$/views/major_base_add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="171" column="90" selection-start-line="171" selection-start-column="66" selection-end-line="171" selection-end-column="90" />
+        <state relative-caret-position="325">
+          <caret line="28" column="36" lean-forward="true" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="77" />
           <folding>
-            <element signature="e#338#1090#0#HTML" />
-            <element signature="n#style#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#body#0;n#!!top" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/my_course_teach_target.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+        <state relative-caret-position="1351">
+          <caret line="77" selection-start-line="77" selection-end-line="77" />
           <folding>
-            <element signature="e#21#82#0" expanded="true" />
             <element signature="n#!!block;n#GetGRAndIP#0" />
+            <element signature="n#!!block;n#DeleteTeachTarget#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/my_course_base.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="16" column="62" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/my_course_modify_supt_ip.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="30" column="62" selection-start-line="30" selection-start-column="62" selection-end-line="30" selection-end-column="62" />
+          <folding>
+            <element signature="n#!!block;n#Post#0" />
+            <element signature="n#!!block;n#GetGRIPs#0" />
+            <element signature="n#!!block;n#GetIP#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/my_course_manager.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/my_course_manager.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="59" column="87" lean-forward="true" selection-start-line="59" selection-start-column="80" selection-end-line="59" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/my_course_modify_supt_ip.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="245" column="154" selection-start-line="244" selection-start-column="36" selection-end-line="245" selection-end-column="154" />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/my_course_base_modify.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+          <folding>
+            <element signature="e#21#92#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/my_course_base_modify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="159" column="34" lean-forward="true" selection-start-line="159" selection-start-column="34" selection-end-line="159" selection-end-column="34" />
+          <folding>
+            <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#!!top" />
           </folding>
         </state>
       </provider>

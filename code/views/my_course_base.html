@@ -1,0 +1,177 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<style>
+    p{
+        font-size:20px;
+        font-family: 华文楷体;
+    }
+
+    .myDiv{
+        margin-left: 50px
+    }
+</style>
+</head>
+
+
+<body style="background-color:#222222;">
+<div class="navbar navbar-default top-navbar navbar-inverse" style="background-color: #222222">
+    <div class="container">
+        <div class="pull-left">
+            <img  src="../static/img/logo.png">
+        </div>
+        <div class="pull-right" style="margin-top: 30px">
+            <ul class="nav navbar-nav"  style="margin-top: 10px">
+                <li><div style="color:whitesmoke;font-size: 130%;font-family: 宋体">{{.TeacherName}} 老师</div></li>
+                <li><div style="margin-left:10px;color:whitesmoke;font-size: 130%;font-family: 宋体"><a href="/login?obj=admin">退出</a></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{{template "teacher_body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    课程基本信息
+                </h1>
+                <a href="/teacher/my_course_base_modify?tscid={{.TSCId}}" style="font-size: 20px">修改基本信息</a>
+                <br><br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="margin-left: 20px">
+                        {{with .TSC}}
+                            <br><hr>
+                            <h3>学分：</h3>
+                            <div class="myDiv">
+                                <p>{{.Credit}}</p>
+                                <br>
+                            </div>
+
+                            <h3>考核方式：</h3>
+                            <div class="myDiv">
+                                <p>{{.TestMethod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>总学时：</h3>
+                            <div class="myDiv">
+                                <p>{{.TotalPeriod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>周学时：</h3>
+                            <div class="myDiv">
+                                <p>{{.WeekPeriod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>理论学时：</h3>
+                            <div class="myDiv">
+                                <p>{{.TheoryPeriod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>实验学时：</h3>
+                            <div class="myDiv">
+                                <p>{{.ExperimentalPeriod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>上机学时：</h3>
+                            <div class="myDiv">
+                                <p>{{.ComputerPeriod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>实践学时：</h3>
+                            <div class="myDiv">
+                                <p>{{.PracticePeriod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>课程类别（性质）：</h3>
+                            <div class="myDiv">
+                                <p>{{.Category}}</p>
+                                <br>
+                            </div>
+
+                            <h3>开设学期：</h3>
+                            <div class="myDiv">
+                                <p>{{.Term}}</p>
+                                <br>
+                            </div>
+
+                            <h3>教学内容结构关系图：</h3>
+                            <div class="myDiv">
+                                <p>{{.ContentRelationImgPath}}</p>
+                                <br>
+                            </div>
+
+                            <h3>教学目标总纲：</h3>
+                            <div class="myDiv">
+                                <p>{{.TeachTargetOverview}}</p>
+                                <br>
+                            </div>
+
+                            <h3>课堂教学目标总纲：</h3>
+                            <div class="myDiv">
+                                <p>{{.ClassroomTeachTargetOverview}}</p>
+                                <br>
+                            </div>
+
+                            <h3>实验教学目标总纲：</h3>
+                            <div class="myDiv">
+                                <p>{{.ExperimentTeachTargetOverview}}</p>
+                                <br>
+                            </div>
+
+                            <h3>课程性质、目的、任务：</h3>
+                            <div class="myDiv">
+                                <p>{{.CourseTask}}</p>
+                                <br>
+                            </div>
+
+                            <h3>教学方法：</h3>
+                            <div class="myDiv">
+                                <p>{{.TeachMethod}}</p>
+                                <br>
+                            </div>
+
+                            <h3>本课程与其他课程之间的联系：</h3>
+                            <div class="myDiv">
+                                <p>{{.RelationOtherCourse}}</p>
+                                <br>
+                            </div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

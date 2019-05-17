@@ -22,6 +22,7 @@ func (this *MyCourseTeachTargetController) Get() {
 	this.TplName = "my_course_teach_target.html"
 	this.Data["TeacherName"] = this.GetSession("teacher_name")
 	this.Data["TSCId"] = this.Input().Get("tscid")
+	this.Data["MajorName"] = this.Input().Get("major_name")
 
 	TeTs, err := models.GetTSCTeachTarget(this.Input().Get("tscid"))
 	if err != nil {
@@ -44,7 +45,7 @@ func (this *MyCourseTeachTargetController) GetGRAndIP() {
 	}
 
 	data, _ := json.Marshal(grips)
-	fmt.Println(this.Ctx.ResponseWriter, string(data))
+	fmt.Fprintln(this.Ctx.ResponseWriter, string(data))
 }
 
 // 添加教学目标
@@ -52,13 +53,14 @@ func (this *MyCourseTeachTargetController) AddTeachTarget() {
 	number := this.Input().Get("TeTNumber")
 	description := this.Input().Get("TeTDescription")
 	tscid := this.Input().Get("TSCId")
+	majorName := this.Input().Get("major_name")
 
 	err := models.AddTeachTarget(tscid, number, description)
 	if err != nil {
 		logs.Error(err)
 	}
 
-	this.Redirect(fmt.Sprintf("/teacher/my_course_teach_target?tscid=%s", tscid), 302)
+	this.Redirect(fmt.Sprintf("/teacher/my_course_teach_target?tscid=%s&major_name=%s", tscid, majorName), 302)
 }
 
 // 修改教学目标
@@ -67,13 +69,14 @@ func (this *MyCourseTeachTargetController) ModifyTeachTarget() {
 	description := this.Input().Get("TeTDescription")
 	tetid := this.Input().Get("TeTId")
 	tscid := this.Input().Get("TSCId")
+	majorName := this.Input().Get("major_name")
 
 	err := models.ModifyTeachTarget(tetid, number, description)
 	if err != nil {
 		logs.Error(err)
 	}
 
-	this.Redirect(fmt.Sprintf("/teacher/my_course_teach_target?tscid=%s", tscid), 302)
+	this.Redirect(fmt.Sprintf("/teacher/my_course_teach_target?tscid=%s&major_name=%s", tscid, majorName), 302)
 }
 
 // 删除教学目标
@@ -83,6 +86,6 @@ func (this *MyCourseTeachTargetController) DeleteTeachTarget() {
 		logs.Error(err)
 	}
 	tscid := this.Input().Get("tscid")
-
-	this.Redirect(fmt.Sprintf("/teacher/my_course_teach_target?tscid=%s", tscid), 302)
+	majorName := this.Input().Get("major_name")
+	this.Redirect(fmt.Sprintf("/teacher/my_course_teach_target?tscid=%s&major_name=%s", tscid, majorName), 302)
 }

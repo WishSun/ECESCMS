@@ -70,4 +70,10 @@ func init() {
 	beego.Router("/teacher/my_course_teach_target/get_gr_and_ip", &controllers.MyCourseTeachTargetController{}, "post:GetGRAndIP")
 	beego.Router("/teacher/my_course_teach_target/modify_teach_target", &controllers.MyCourseTeachTargetController{}, "post:ModifyTeachTarget")
 	beego.Router("/teacher/my_course_teach_target/delete", &controllers.MyCourseTeachTargetController{}, "get:DeleteTeachTarget")
+
+	beego.Router("/teacher/my_course_modify_supt_ip", &controllers.MyCourseModifySuptIPController{})
+	beego.Router("/teacher/my_course_modify_supt_ip/get_gr_ips", &controllers.MyCourseModifySuptIPController{}, "post:GetGRIPs")
+	beego.Router("/teacher/my_course_modify_supt_ip/get_ip", &controllers.MyCourseModifySuptIPController{}, "post:GetIP")
+	beego.Router("/teacher/my_course_base", &controllers.MyCourseBaseController{})
+	beego.Router("/teacher/my_course_base_modify", &controllers.MyCourseBaseModifyController{})
 }

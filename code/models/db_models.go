@@ -137,6 +137,8 @@ type TeacherSelectCourse struct {
 	WeekPeriod             int64  `orm:"column(week_period);null"`               // 周学时
 	ContentRelationImgPath string `orm:"column(content_relation_img_path);null"` // 教学内容关系图路径
 	TeachTargetOverview    string `orm:"column(teach_target_overview);null"`     // 教学目标总纲
+	ClassroomTeachTargetOverview    string `orm:"column(classroom_teach_target_overview);null"`     // 课堂教学目标总纲
+	ExperimentTeachTargetOverview    string `orm:"column(experiment_teach_target_overview);null"`     // 实验教学目标总纲
 	CourseTask             string `orm:"column(course_task);null"`               // 课程性质、目的、任务
 	TeachMethod            string `orm:"column(teach_method);null"`              // 教学方法
 	RelationOtherCourse    string `orm:"column(relation_other_course);null"`     // 与其他课程的关系

@@ -1,0 +1,186 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<style>
+    p{
+        font-size:20px;
+        font-family: 华文楷体;
+    }
+    label{
+        font-size:20px;
+    }
+</style>
+
+<script type="text/javascript">
+    function BackMyCourseBaseView(tscid){
+        window.location = "/teacher/my_course_base?tscid="+tscid;
+    }
+</script>
+</head>
+
+
+<body style="background-color:#222222;">
+<div class="navbar navbar-default top-navbar navbar-inverse" style="background-color: #222222">
+    <div class="container">
+        <div class="pull-left">
+            <img  src="../static/img/logo.png">
+        </div>
+        <div class="pull-right" style="margin-top: 30px">
+            <ul class="nav navbar-nav"  style="margin-top: 10px">
+                <li><div style="color:whitesmoke;font-size: 130%;font-family: 宋体">{{.TeacherName}} 老师</div></li>
+                <li><div style="margin-left:10px;color:whitesmoke;font-size: 130%;font-family: 宋体"><a href="/login?obj=admin">退出</a></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{{template "teacher_body_header"}} <!-- 引入body头模板内容-->
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    修改课程基本信息
+                </h1>
+                <br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>课程基本信息</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <form role="form" action="/teacher/my_course_base" method="POST">
+                                    <div class="form-group" style="width: 400px;margin-left: 100px">
+                                        {{with .TSC}}
+                                            <div style="width: 300px;">
+                                                <input type="hidden" name="TSCId" value="{{.Id}}">
+                                                <label>学分：</label>
+                                                <input class="form-control" name="TSCCredit" value="{{.Credit}}">
+                                                <br>
+
+                                                <label>考核方式：</label>
+                                                <select class="form-control" style="width:200px" name="TSCTestMethod" value="{{.TestMethod}}">
+                                                    <option>考察</option>
+                                                    <option>考试</option>
+                                                </select>
+                                                <br>
+                                            </div>
+
+                                            <div style="width: 300px;">
+                                                <label>总学时：</label>
+                                                <input class="form-control" name="TSCTotalPeriod" value="{{.TotalPeriod}}">
+                                                <br>
+
+                                                <label>周学时：</label>
+                                                <input class="form-control" name="TSCWeekPeriod" value="{{.WeekPeriod}}">
+                                                <br>
+
+                                                <label>理论学时：</label>
+                                                <input class="form-control" name="TSCTheoryPeriod" value="{{.TheoryPeriod}}">
+                                                <br>
+
+                                                <label>实验学时：</label>
+                                                <input class="form-control" name="TSCExperimentalPeriod" value="{{.ExperimentalPeriod}}">
+                                                <br>
+
+                                                <label>上机学时：</label>
+                                                <input class="form-control" name="TSCComputerPeriod" value="{{.ComputerPeriod}}">
+                                                <br>
+
+                                                <label>实践学时：</label>
+                                                <input class="form-control" name="TSCPracticePeriod" value="{{.PracticePeriod}}">
+                                                <br>
+
+                                                <label>课程类别（性质）：</label>
+                                                <select class="form-control" style="width:200px" name="TSCCategory" value="{{.Category}}">
+                                                    <option>专业选修课</option>
+                                                    <option>专业核心</option>
+                                                </select>
+                                                <br>
+
+                                                <label>开设学期：</label>
+                                                <select class="form-control" style="width:200px" name="TSCTerm" value="{{.Term}}">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>7</option>
+                                                    <option>8</option>
+                                                </select>
+                                                <br>
+                                            </div>
+
+                                            <div>
+                                                <label>教学内容结构关系图：</label>
+                                                <div class="form-group">
+                                                    <small>选择图片文件</small>
+                                                    <input type="file" name="TSCContentRelationImgPath" value="ContentRelationImgPath">
+                                                </div>
+                                                <br>
+                                            </div>
+
+
+                                            <div style="width: 700px">
+                                                <label>教学目标总纲：</label>
+                                                <textarea class="form-control" rows="8" name="TSCTeachTargetOverview">{{.TeachTargetOverview}}</textarea>
+                                                <br>
+
+                                                <label>课堂教学目标总纲：</label>
+                                                <textarea class="form-control" rows="8" name="TSCClassroomTeachTargetOverview">{{.ClassroomTeachTargetOverview}}</textarea>
+                                                <br>
+
+                                                <label>实验教学目标总纲：</label>
+                                                <textarea class="form-control" rows="8" name="TSCExperimentTeachTargetOverview">{{.ExperimentTeachTargetOverview}}</textarea>
+                                                <br>
+
+                                                <label>课程性质、目的、任务：</label>
+                                                <textarea class="form-control" rows="8" name="TSCCourseTask">{{.CourseTask}}</textarea>
+                                                <br>
+
+                                                <label>教学方法：</label>
+                                                <textarea class="form-control" rows="8" name="TSCTeachMethod">{{.TeachMethod}}</textarea>
+                                                <br>
+
+                                                <label>本课程与其他课程之间的联系：</label>
+                                                <textarea class="form-control" rows="8" name="TSCRelationOtherCourse">{{.RelationOtherCourse}}</textarea>
+                                            </div>
+                                        {{end}}
+                                    </div>
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                    <button type="button" class="btn btn-default" onclick="BackMyCourseBaseView({{.TSCId}})">返回</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

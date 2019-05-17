@@ -1,0 +1,273 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>修改指标点</title>
+<style>
+    span{
+        font-size:17px;
+        font-family: 华文楷体;
+    }
+</style>
+
+<script type="text/javascript">
+    var addIPIds = [];
+
+    // 检查ip重复
+    function CheckRepeat(ipId) {
+        for(i = 0; i < addIPIds.length; i++){
+            if (ipId == addIPIds[i]){
+                return false
+            }
+        }
+        return true
+    }
+
+    // 将ipId添加到IPIds中
+    function AddIPIdToIPIds(ipId){
+        addIPIds.push(ipId);
+    }
+
+    // 将ipId冲IPIds中删除
+    function DelIpIdInIPIds(ipId) {
+        var ipIndex;
+        for(i = 0; i < addIPIds.length; i++){
+            if(ipId === addIPIds[i]){
+                ipIndex = i;
+            }
+        }
+
+        // 删除数组下标为ipIndex开始，1个长度的元素
+        addIPIds.splice(ipIndex, 1)
+    }
+
+    // 删除指定id元素
+    function Del(id) {
+        $("#"+id).remove()
+    }
+
+    // 删除支撑指标点div
+    function DelSuptIpDiv(id) {
+        Del(id);
+        DelIpIdInIPIds(id);
+    }
+
+    // 显示选择的指标点
+    function ViewIPDiv(majorName){
+        // 获取gr选中的值
+        var grSelect = document.getElementById("GraduationRequirementSelect");
+        var grIndex = grSelect.selectedIndex;
+        var grText = grSelect.options[grIndex].text;
+
+        // 获取ip选中的值
+        var ipSelect = document.getElementById("IndicatorPointSelect");
+        var ipIndex = ipSelect.selectedIndex;
+        var ipText = ipSelect.options[ipIndex].text;
+
+        if (ipText===""){
+            return;
+        }
+
+        // 删除之前的divt
+        Del("IPViewDiv");
+
+        // 添加新的div
+        $("#IPView").append('<div id="IPViewDiv"></div>')
+
+        // 从后台获取ip,并添加新的div
+        $.post("/teacher/my_course_modify_supt_ip/get_ip",{
+            MajorName:majorName,
+            GRText:grText,
+            IPText:ipText
+        },function(data){
+            if(data.Code == 0){
+                // 添加新的元素
+                $("#IPViewDiv").append('<input id="IPIdText" type="hidden" value="'+data.Ip.Id+'"><span id="IpText">'
+                    + data.Ip.Number + '、 ' + data.Ip.Description +
+                    '</span>')
+            }
+        },"json");
+    }
+
+    // 设置指标点select标签
+    function SetIPSelectAndViewGRDiv(majorName){
+        // 获取gr选中的值
+        var grSelect = document.getElementById("GraduationRequirementSelect");
+        var grIndex = grSelect.selectedIndex;
+        var grText = grSelect.options[grIndex].text;
+
+        // 删除GRView标签
+        Del("GRViewDiv");
+        if (grText === ""){
+            return
+        }
+        // 删除IPSelect标签
+        Del("IPSelectDiv");
+
+        // 添加新的IPSelect标签
+        $("#IPDiv").append('<div id="IPSelectDiv">' +
+            '<select id="IndicatorPointSelect" class="form-control" style="width:200px" onchange="ViewIPDiv(\''+majorName+'\')">' +
+            +'</select></div>');
+        $("#GRView").append('<div id="GRViewDiv"></div>');
+
+        // 从后台获取数据
+        $.post("/teacher/my_course_modify_supt_ip/get_gr_ips",{
+            MajorName:majorName,
+            GRText:grText
+        },function(data){
+            if(data.Code == 0){
+                for(i = 0; i < data.Ips.length; i++){
+                    // 添加新的元素
+                    $("#IndicatorPointSelect").append('<option>' + data.Ips[i].Number + '</option>')
+                }
+
+                // 设置div显示毕业要求内容
+                $("#GRViewDiv").append('<span>' +
+                    + data.GRinfo.Number +'、 '+ data.GRinfo.Name + ':<br>'+ data.GRinfo.Description +
+                    '</span>')
+
+                ViewIPDiv(majorName)
+            }
+        },"json");
+    }
+
+    // 将选中的IP添加到IP列表中
+    function AddGRAndIPToDiv(){
+        var ipId = document.getElementById("IPIdText").value;
+
+        if(CheckRepeat(ipId)){
+            AddIPIdToIPIds(ipId);
+        }else{
+            alert("请不要重复添加！");
+            return;
+        }
+
+        var ipText = document.getElementById("IpText").innerText;
+        $("#IPContainer").append('' +
+            '<div id="SuptDiv'+ipId+'">' +
+            '<input type="hidden" name="IPIds" value="' + ipId + '">' +
+            '<span>'+ ipText + '</span><br>' +
+            '<button type="button" onclick="DelSuptIpDiv(\'SuptDiv' + ipId + '\')">删除</button><br><br>'+
+            '</div>');
+    }
+
+    // 返回教学目标管理页
+    function BackTeachTargetManager(tscId, majorName){
+        window.location = "/teacher/my_course_teach_target?tscid=" + tscId + "&major_name=" + majorName;
+    }
+</script>
+</head>
+
+
+<body style="background-color:#222222;">
+<div class="navbar navbar-default top-navbar navbar-inverse" style="background-color: #222222">
+    <div class="container">
+        <div class="pull-left">
+            <img  src="../static/img/logo.png">
+        </div>
+        <div class="pull-right" style="margin-top: 30px">
+            <ul class="nav navbar-nav"  style="margin-top: 10px">
+                <li><div style="color:whitesmoke;font-size: 130%;font-family: 宋体">{{.TeacherName}} 老师</div></li>
+                <li><div style="margin-left:10px;color:whitesmoke;font-size: 130%;font-family: 宋体"><a href="/login?obj=admin">退出</a></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{{template "teacher_body_header"}} <!-- 引入body头模板内容-->
+
+
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    调整支撑的指标点
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="margin-left: 50px">
+                        <h3>添加支撑的指标点项</h3><br><hr><br>
+                        <div style="margin-left: 50px">
+                            <div>
+                                <label style="font-size:15px">选择毕业要求：</label><br>
+                                <select id="GraduationRequirementSelect" class="form-control" style="width:200px" onchange="SetIPSelectAndViewGRDiv({{.MajorName}})">
+                                    {{range .GRs}}
+                                        <option>{{.Number}}-{{.Name}}</option>
+                                    {{end}}
+                                </select><br>
+
+                                <label style="font-size:15px">选择指标点：</label><br>
+                                <div id="IPDiv">
+                                    <div id="IPSelectDiv"></div>
+                                </div>
+
+                                <div style="margin-left: 200px">
+                                    <br>
+                                    <button type="button" onclick="AddGRAndIPToDiv()">点击添加</button><br><br>
+                                </div>
+                            </div>
+
+                            <div style="width: 700px">
+                                <div id="GRView"></div><div id="IPView"><br></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        SetIPSelectAndViewGRDiv({{.MajorName}});
+                        ViewIPDiv({{.MajorName}});
+                    </script>
+
+                    <div class="panel-body" style="margin-left: 50px">
+                        <br>
+                        <h3>已添加指标点列表：</h3><br><br>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form role="form" action="/teacher/my_course_modify_supt_ip" method="POST">
+                                    <div id="IPContainer" class="pre-scrollable" style="width:800px;height:200px;">
+                                        {{range .SuptIps}}
+                                            <div id="SuptDiv{{.Id}}">
+                                                <input type="hidden" name="IPIds" value="{{.Id}}">
+                                                <span>{{.Number}}、{{.Description}}</span><br>
+                                                <button type="button" onclick="DelSuptIpDiv('SuptDiv{{.Id}}')">删除</button>
+                                                <br><br>
+                                            </div>
+                                            <script>
+                                                AddIPIdToIPIds({{.Id}});
+                                            </script>
+                                        {{end}}
+                                    </div>
+                                    <input type="hidden" name="tscId" value={{.TSCId}}>
+                                    <input type="hidden" name="majorName" value={{.MajorName}}>
+                                    <input type="hidden" name="tetId" value={{.TeTId}}>
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                    <button type="button" class="btn btn-default" onclick="BackTeachTargetManager({{.TSCId}}, {{.MajorName}})">返回</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

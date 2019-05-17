@@ -1,13 +1,5 @@
 {{template "header"}}  <!-- 引入头模板内容 -->
 <title>管理员首页</title>
-<style>
-    p{
-        font-family: 华文楷体;
-        font-size: 20px;
-        width: 800px;
-        text-indent: 40px;
-    }
-</style>
 
 <script type="text/javascript">
     // 根据教学目标Id获取毕业要求和指标点（使用ajax动态获取）
@@ -35,30 +27,22 @@
     }
 
     // 添加新教学目标
-    function AddNewTeachTarget(){
+    function AddNewTeachTarget(majorName){
         viewElem("AndOrModifyDiv");
         viewElem("addLabel");
         hideElem("modifyLabel");
-        document.TeTForm.action = "/teacher/my_course_teach_target/add_teach_target";
+        document.TeTForm.action = "/teacher/my_course_teach_target/add_teach_target?major_name="+majorName;
     }
 
     // 修改教学目标
-    function ModifyTeachTarget(tetId, number, description){
+    function ModifyTeachTarget(tetId, number, description, majorName){
         viewElem("AndOrModifyDiv");
         viewElem("modifyLabel");
         hideElem("addLabel");
-        document.TeTForm.action = "/teacher/my_course_teach_target/modify_teach_target";
+        document.TeTForm.action = "/teacher/my_course_teach_target/modify_teach_target?major_name="+majorName;
         $("#TeTIdText").val(tetId);
         $("#TeTNumberText").val(number);
         $("#TeTDescriptionText").val(description);
-    }
-
-    // 修改支撑指标点
-    function ModifySuptIP(){
-    }
-
-    // 修改支撑指标点
-    function CancelModifySuptIP(){
     }
 
     // 取消添加或修改教学目标(将form表单隐藏)
@@ -104,7 +88,7 @@
                 <h1 class="page-header">
                     教学目标管理首页
                 </h1>
-                <button type="button" class="btn btn-default" onclick="AddNewTeachTarget()">添加新教学目标</button>
+                <button type="button" class="btn btn-default" onclick="AddNewTeachTarget({{.MajorName}})">添加新教学目标</button>
                 <br><br>
             </div>
         </div>
@@ -155,21 +139,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {{$majorName := .MajorName}}
                                 {{range .TeTs}}
                                     <tr class="odd">
                                         <td>{{.Number}}</td>
                                         <td>{{.Description}}</td>
-                                        <td id="GRText{{.Id}}"></td>
-                                        <td id="GRIPText{{.Id}}"></td>
+                                        <td><div style="width:200px;font-family: 华文楷体;" id="GRText{{.Id}}"></div></td>
+                                        <td><div style="width:200px;font-family: 华文楷体;" id="GRIPText{{.Id}}"></div></td>
                                         <td>
                                             <span style="margin-left: 8px">
-                                                <a href="#" onclick="ModifyTeachTarget({{.Id}}, {{.Number}}, {{.Description}})">修改</a>
+                                                <a href="#" onclick="ModifyTeachTarget({{.Id}}, {{.Number}}, {{.Description}}, {{$majorName}})">修改</a>
                                             </span>
                                             <span style="margin-left: 8px">
-                                                <a href="/teacher/my_course_teach_target/delete?tetid={{.Id}}&tscid={{.TSC_id}}">删除</a>
+                                                <a href="/teacher/my_course_teach_target/delete?tetid={{.Id}}&tscid={{.TSC_id}}&major_name={{$majorName}}">删除</a>
                                             </span>
                                             <span style="margin-left: 8px">
-                                                <a href="/teacher/my_course_modify_supt_ip?tetid={{.Id}}&tscid={{.TSC_id}}" onclick="ModifySuptIP()">调整支撑指标点</a>
+                                                <a href="/teacher/my_course_modify_supt_ip?tetid={{.Id}}&tscid={{.TSC_id}}&major_name={{$majorName}}">调整支撑指标点</a>
                                             </span>
                                         </td>
                                         <script>

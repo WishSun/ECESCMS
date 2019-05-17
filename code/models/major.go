@@ -79,6 +79,15 @@ func GetMajorNameByMMCId(mmcId string)(string, error){
 	return major_name, err
 }
 
+// 根据专业名获取专业Id
+func GetMajorIdByMajorName(majorName string)(string, error){
+	o := orm.NewOrm()
+	var mid int64
+	err := o.Raw("select id from major where name=?", majorName).QueryRow(&mid)
+	smid := strconv.FormatInt(mid, 10)
+	return smid, err
+}
+
 // 获取专业所有培养目标点以及目标概述
 func GetMajorAllTrainTarget(mid string) ([]*TrainTarget, string, error) {
 	midNum, err := strconv.ParseInt(mid, 10, 64)
