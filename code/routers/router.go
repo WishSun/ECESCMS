@@ -76,4 +76,24 @@ func init() {
 	beego.Router("/teacher/my_course_modify_supt_ip/get_ip", &controllers.MyCourseModifySuptIPController{}, "post:GetIP")
 	beego.Router("/teacher/my_course_base", &controllers.MyCourseBaseController{})
 	beego.Router("/teacher/my_course_base_modify", &controllers.MyCourseBaseModifyController{})
+
+	beego.Router("/teacher/my_course_activity", &controllers.MyCourseActivityController{})
+	beego.Router("/teacher/my_course_activity/get_tets", &controllers.MyCourseActivityController{}, "post:GetTeTs")
+	beego.Router("/teacher/my_course_activity/get_tetws", &controllers.MyCourseActivityController{}, "post:GetTeTWs")
+	beego.Router("/teacher/my_course_activity/get_tet_weight", &controllers.MyCourseActivityController{}, "post:GetTeTWeight")
+	beego.Router("/teacher/my_course_activity/add_activity", &controllers.MyCourseActivityController{}, "post:AddActivity")
+	beego.Router("/teacher/my_course_activity/modify_activity", &controllers.MyCourseActivityController{}, "post:ModifyActivity")
+	beego.Router("/teacher/my_course_activity/delete_activity", &controllers.MyCourseActivityController{}, "get:DeleteActivity")
+
+	beego.Router("/teacher/my_course_activity_child", &controllers.MyCourseActivityChildController{})
+	beego.Router("/teacher/my_course_activity_child/get_tachild_results", &controllers.MyCourseActivityChildController{}, "post:GetTAChildResults")
+
+	beego.Router("/teacher/my_course_activity_result", &controllers.MyCourseActivityResultController{})
+	beego.Router("/teacher/my_course_activity_result/get_ta_result", &controllers.MyCourseActivityResultController{}, "post:GetTAResult")
+
+	beego.Router("/teacher/my_course_activity_child_result_manager", &controllers.MyCourseActivityChildResultManagerController{})
+	beego.Router("/teacher/my_course_activity_child_result_manager/get_tachild_result", &controllers.MyCourseActivityChildResultManagerController{}, "post:GetTAChildResult")
+
+	beego.Router("/teacher/my_course_activity_child_student_result_manager", &controllers.MyCourseActivityChildStudentResultManagerController{})
+	beego.Router("/teacher/my_course_activity_child_student_result_manager/get_student_all_tachild_result", &controllers.MyCourseActivityChildStudentResultManagerController{}, "post:GetStudentAllTAChildResult")
 }

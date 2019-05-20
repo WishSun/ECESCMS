@@ -13,7 +13,6 @@ type StudentManagerController struct {
 
 func (this *StudentManagerController) Get() {
 	this.TplName = "student_manager.html"
-	logs.Info("进入Get！")
 	majors, err := models.GetAllMajor()
 	if err != nil {
 		logs.Error(err)
@@ -27,7 +26,6 @@ func (this *StudentManagerController) Get() {
 		if err != nil {
 			logs.Error(err)
 		}
-		logs.Info("学生信息:", students)
 		this.Data["Students"] = students
 	} else if action == "by_other" {
 		majorName := this.Input().Get("mname")
@@ -45,8 +43,6 @@ func (this *StudentManagerController) Get() {
 
 func (this *StudentManagerController) Post() {
 	action := this.Input().Get("action")
-	//this.Redirect(fmt.Sprintf("/admin/student_manager?action=%s", action), 302)
-	//
 
 	if action == "by_name" {
 		name := this.Input().Get("FilterSName")

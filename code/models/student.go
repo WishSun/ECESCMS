@@ -18,7 +18,50 @@ func AddStudent(number, name, class, grade, majorName string) error {
 	}
 
 	_, err := o.Insert(student)
-	return err
+	if err != nil {
+		return err
+	}
+
+	// 将学生添加到他所在的年级、专业、课程的活动以及活动项的成绩
+	taIds := make([]int64, 0)
+	tacIds := make([]int64, 0)
+	_, err = o.Raw("select id from teach_activity where TSC_id in "+
+		"(select id from teacher_select_course where mmc_id in "+
+		"(select id from major_map_course where major_id in "+
+		"(select id from major where name=?)))", majorName).QueryRows(&taIds)
+
+	_, err = o.Raw("select id from teach_activity_child where TA_id in "+
+		"(select id from teach_activity where TSC_id in "+
+		"(select id from teacher_select_course where mmc_id in "+
+		"(select id from major_map_course where major_id in "+
+		"(select id from major where name=?))))", majorName).QueryRows(&tacIds)
+
+	// 获取学生自己的Id
+	var studentId int64
+	err = o.Raw("select id from student where number=?", number).QueryRow(&studentId)
+	for _, taid := range taIds {
+		sJA := &StudentJoinActivity{
+			TA_id:      taid,
+			Student_id: studentId,
+			Result:     0,
+		}
+		_, err = o.Insert(sJA)
+		if err != nil {
+			return err
+		}
+	}
+	for _, tacid := range tacIds {
+		sJAC := &StudentJoinActivityChild{
+			TAC_id:     tacid,
+			Student_id: studentId,
+			Result:     0,
+		}
+		_, err = o.Insert(sJAC)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // 根据专业、年级、班级来查找学生
