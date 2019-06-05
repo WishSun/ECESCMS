@@ -15,6 +15,12 @@ func (this *TeTSuptIP) TableName() string {
 func (this *TACSuptTeT) TableName() string {
 	return "tac_supt_tet"
 }
+func (this *StuTeTAverageResultInTA) TableName() string {
+	return "stu_tet_average_result_in_ta"
+}
+func (this *LinkTotalResult) TableName() string {
+	return "link_total_result"
+}
 
 // 注册数据库
 func RegisterDB() {
@@ -25,7 +31,9 @@ func RegisterDB() {
 		new(TeachContent), new(TeachTarget), new(TeachActivity),
 		new(TeachActivityChild), new(Student), new(TeTSuptIP),
 		new(TACSuptTeT), new(TeachTargetWeightInTeachActivity),
-		new(StudentJoinActivity), new(StudentJoinActivityChild))
+		new(StudentJoinActivity), new(StudentJoinActivityChild),
+		new(StuTeTAverageResultInTA), new(LinkTotalResult),
+		new(ResultAnalysisReport))
 
 	// 注册驱动
 	orm.RegisterDriver("mysql", orm.DRMySQL)
@@ -40,17 +48,17 @@ func RegisterDB() {
 //-----------------------------------
 // 专业表
 type Major struct {
-	Id              int64  `orm:"column(id);auto"`             // 专业自增编号
-	Number          string `orm:"column(number);unique"`       // 专业号
-	Name            string `orm:"column(name);unique"`         // 专业名称
-	Overview        string `orm:"column(overview);size(5000)"` // 专业概述
-	MainSubject     string `orm:"column(main_subject)"`        // 主干学科
-	StudyYears      int64  `orm:"column(study_years)"`         // 修业年限
-	Degree          string `orm:"column(degree)"`              // 授予学位
-	CoreCourse      string `orm:"column(core_course)"`         // 核心课程
-	TotalCredits    int64  `orm:"column(total_credits)"`       // 总学分
-	TheoryCredits   int64  `orm:"column(theory_credits)"`      // 理论教学总学分
-	PracticeCredits int64  `orm:"column(practice_credits)"`    // 实践教学学分
+	Id              int64   `orm:"column(id);auto"`             // 专业自增编号
+	Number          string  `orm:"column(number);unique"`       // 专业号
+	Name            string  `orm:"column(name);unique"`         // 专业名称
+	Overview        string  `orm:"column(overview);size(5000)"` // 专业概述
+	MainSubject     string  `orm:"column(main_subject)"`        // 主干学科
+	StudyYears      int64   `orm:"column(study_years)"`         // 修业年限
+	Degree          string  `orm:"column(degree)"`              // 授予学位
+	CoreCourse      string  `orm:"column(core_course)"`         // 核心课程
+	TotalCredits    float64 `orm:"column(total_credits)"`       // 总学分
+	TheoryCredits   float64 `orm:"column(theory_credits)"`      // 理论教学总学分
+	PracticeCredits float64 `orm:"column(practice_credits)"`    // 实践教学学分
 }
 
 // 培养目标表
@@ -122,27 +130,27 @@ type Teacher struct {
 
 // 教师选课表
 type TeacherSelectCourse struct {
-	Id                            int64  `orm:"column(id);auto"`                               // 自增编号
-	MMC_id                        int64  `orm:"column(mmc_id)"`                                // 专业课程对应编号
-	Teacher_id                    int64  `orm:"column(teacher_id)"`                            // 教师编号
-	Grade                         string `orm:"column(grade)"`                                 // 年级
-	Term                          int64  `orm:"column(term);null"`                             // 开设学期
-	Credit                        int64  `orm:"column(credit);null"`                           // 学分
-	TestMethod                    string `orm:"column(test_method);null"`                      // 考核方式
-	TotalPeriod                   int64  `orm:"column(total_period);null"`                     // 总学时
-	TheoryPeriod                  int64  `orm:"column(theory_period);null"`                    // 理论学时
-	ExperimentalPeriod            int64  `orm:"column(experimental_period);null"`              // 实验学时
-	ComputerPeriod                int64  `orm:"column(computer_period);null"`                  // 上机学时
-	PracticePeriod                int64  `orm:"column(practice_period);null"`                  // 实践学时
-	WeekPeriod                    int64  `orm:"column(week_period);null"`                      // 周学时
-	ContentRelationImgPath        string `orm:"column(content_relation_img_path);null"`        // 教学内容关系图路径
-	TeachTargetOverview           string `orm:"column(teach_target_overview);null"`            // 教学目标总纲
-	ClassroomTeachTargetOverview  string `orm:"column(classroom_teach_target_overview);null"`  // 课堂教学目标总纲
-	ExperimentTeachTargetOverview string `orm:"column(experiment_teach_target_overview);null"` // 实验教学目标总纲
-	CourseTask                    string `orm:"column(course_task);null"`                      // 课程性质、目的、任务
-	TeachMethod                   string `orm:"column(teach_method);null"`                     // 教学方法
-	RelationOtherCourse           string `orm:"column(relation_other_course);null"`            // 与其他课程的关系
-	Category                      string `orm:"column(category);null"`                         // 课程类别(性质)
+	Id                            int64   `orm:"column(id);auto"`                                          // 自增编号
+	MMC_id                        int64   `orm:"column(mmc_id)"`                                           // 专业课程对应编号
+	Teacher_id                    int64   `orm:"column(teacher_id)"`                                       // 教师编号
+	Grade                         string  `orm:"column(grade)"`                                            // 年级
+	Term                          int64   `orm:"column(term);null"`                                        // 开设学期
+	Credit                        float64 `orm:"column(credit);null"`                                      // 学分
+	TestMethod                    string  `orm:"column(test_method);null"`                                 // 考核方式
+	TotalPeriod                   int64   `orm:"column(total_period);null"`                                // 总学时
+	TheoryPeriod                  int64   `orm:"column(theory_period);null"`                               // 理论学时
+	ExperimentalPeriod            int64   `orm:"column(experimental_period);null"`                         // 实验学时
+	ComputerPeriod                int64   `orm:"column(computer_period);null"`                             // 上机学时
+	PracticePeriod                int64   `orm:"column(practice_period);null"`                             // 实践学时
+	WeekPeriod                    int64   `orm:"column(week_period);null"`                                 // 周学时
+	ContentRelationImgPath        string  `orm:"column(content_relation_img_path);null"`                   // 教学内容关系图路径
+	TeachTargetOverview           string  `orm:"column(teach_target_overview);size(3000);null"`            // 教学目标总纲
+	ClassroomTeachTargetOverview  string  `orm:"column(classroom_teach_target_overview);size(3000);null"`  // 课堂教学目标总纲
+	ExperimentTeachTargetOverview string  `orm:"column(experiment_teach_target_overview);size(3000);null"` // 实验教学目标总纲
+	CourseTask                    string  `orm:"column(course_task);size(3000);null"`                      // 课程性质、目的、任务
+	TeachMethod                   string  `orm:"column(teach_method);size(3000);null"`                     // 教学方法
+	RelationOtherCourse           string  `orm:"column(relation_other_course);null"`                       // 与其他课程的关系
+	Category                      string  `orm:"column(category);null"`                                    // 课程类别(性质)
 }
 
 // 教学内容表
@@ -169,10 +177,11 @@ type TeachTarget struct {
 
 // 教学活动表
 type TeachActivity struct {
-	Id     int64  `orm:"column(id);auto"`                                             // 教学活动自增编号
-	TSC_id int64  `orm:"column(TSC_id);description(TSC意为TeacherSelectCourse, 即教师选课)"` // 教师选课编号
-	Name   string `orm:"column(name)"`                                                // 活动名
-	Weight int64  `orm:"column(weight)"`                                              // 教学活动在平时成绩中占比
+	Id           int64  `orm:"column(id);auto"`                                             // 教学活动自增编号
+	TSC_id       int64  `orm:"column(TSC_id);description(TSC意为TeacherSelectCourse, 即教师选课)"` // 教师选课编号
+	Name         string `orm:"column(name)"`                                                // 活动名
+	Weight       int64  `orm:"column(weight)"`                                              // 教学活动在教学目标中占比
+	ResultWeight int64  `orm:"column(result_weight)"`                                       // 教学活动在学生成绩中占比
 }
 
 // 教学目标在教学活动中的权重
@@ -189,6 +198,21 @@ type TeachActivityChild struct {
 	TA_id int64  `orm:"column(TA_id);description(TA意为TeachActivity, 即教学活动)"` // 教学活动编号
 	Name  string `orm:"column(name)"`                                        // 活动项名
 	Value int64  `orm:"column(value)"`                                       // 活动项分值
+}
+
+// 教学活动中学生的教学目标平均成绩
+type StuTeTAverageResultInTA struct {
+	Id     int64   `orm:"column(id)"`     // 自增编号
+	TA_id  int64   `orm:"column(TA_id)"`  // 教学活动编号
+	TeT_id int64   `orm:"column(TeT_id)"` // 教学目标编号
+	Result float64 `orm:"column(result)"` // 平均成绩
+}
+
+// 教学活动所支撑的教学目标总成绩
+type LinkTotalResult struct {
+	Id     int64   `orm:"column(id)"`     // 自增编号
+	TA_id  int64   `orm:"column(TA_id)"`  // 教学活动编号
+	Result float64 `orm:"column(result)"` // 总成绩
 }
 
 // 学生表
@@ -220,18 +244,32 @@ type TACSuptTeT struct {
 
 // 学生参与教学活动表
 type StudentJoinActivity struct {
-	Id         int64 `orm:"column(id);auto"`    // 自增编号
-	Student_id int64 `orm:"column(student_id)"` // 学生编号
-	TA_id      int64 `orm:"column(TA_id)"`      // 教学活动编号
-	Result     int64 `orm:"column(result)"`     // 成绩
+	Id         int64   `orm:"column(id);auto"`    // 自增编号
+	Student_id int64   `orm:"column(student_id)"` // 学生编号
+	TA_id      int64   `orm:"column(TA_id)"`      // 教学活动编号
+	Result     float64 `orm:"column(result)"`     // 成绩
 }
 
 // 学生参与教学活动项表
 type StudentJoinActivityChild struct {
-	Id         int64 `orm:"column(id);auto"`                                             // 自增编号
-	Student_id int64 `orm:"column(student_id)"`                                          // 学生编号
-	TAC_id     int64 `orm:"column(TAC_id);description(TAC意为TeachActivityChild, 即教学活动项)"` // 教学活动项编号
-	Result     int64 `orm:"column(result)"`                                              // 成绩
+	Id         int64   `orm:"column(id);auto"`                                             // 自增编号
+	Student_id int64   `orm:"column(student_id)"`                                          // 学生编号
+	TAC_id     int64   `orm:"column(TAC_id);description(TAC意为TeachActivityChild, 即教学活动项)"` // 教学活动项编号
+	Result     float64 `orm:"column(result)"`                                              // 成绩
+}
+
+// 成绩分析报告
+type ResultAnalysisReport struct {
+	Id                      int64  `orm:"column(id);auto"`                               // 自增编号
+	TSC_id                  int64  `orm:"column(TSC_id)"`                                // 教师选课编号
+	ActualExamStudentNumber int64  `orm:"column(actual_exam_student_number)"`            // 实际考试人数
+	ExamLocation            string `orm:"column(exam_location)"`                         // 考试地点
+	InvigilationTeacher     string `orm:"column(invigilation_teacher)"`                  // 监考老师
+	ProblemTeacher          string `orm:"column(problem_teacher)"`                       // 命题老师
+	ReadExamPaperTeacher    string `orm:"column(read_exam_paper_teacher)"`               // 阅卷老师
+	TeTFinishAnalysis       string `orm:"column(tet_finish_analysis);size(3000);"`       // 教学目标达成度分析
+	TeTImprovementMeasures  string `orm:"column(tet_improvement_measures);size(3000);"`  // 教学目标达成度改进措施
+	GRIPImprovementMeasures string `orm:"column(grip_improvement_measures);size(3000);"` // 毕业要求指标点改进措施
 }
 
 //-----------------------------------

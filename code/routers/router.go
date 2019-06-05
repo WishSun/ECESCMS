@@ -96,4 +96,10 @@ func init() {
 
 	beego.Router("/teacher/my_course_activity_child_student_result_manager", &controllers.MyCourseActivityChildStudentResultManagerController{})
 	beego.Router("/teacher/my_course_activity_child_student_result_manager/get_student_all_tachild_result", &controllers.MyCourseActivityChildStudentResultManagerController{}, "post:GetStudentAllTAChildResult")
+	beego.Router("/teacher/my_course_activity_child_result_manager/delete_tachild", &controllers.MyCourseActivityChildResultManagerController{}, "get:DeleteTAChild")
+	beego.Router("/teacher/my_course_activity_child_result_manager/modify_tachild", &controllers.MyCourseActivityChildResultManagerController{}, "post:ModifyTAChild")
+	beego.Router("/teacher/my_course_activity_child_result_manager/get_tachild_info", &controllers.MyCourseActivityChildResultManagerController{}, "post:GetTAChildInfo")
+
+	beego.Router("/teacher/my_course_result_analysis_report", &controllers.MyCourseResultAnalysisReportController{})
+	beego.Router("/teacher/my_course_result_analysis_report/get_activity_info", &controllers.MyCourseResultAnalysisReportController{}, "post:GetActivityInfo")
 }

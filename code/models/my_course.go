@@ -2,6 +2,7 @@ package models
 
 import (
 	"ECESCMS/code/common"
+	"fmt"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"strconv"
@@ -9,7 +10,7 @@ import (
 )
 
 // 添加教学活动
-func AddTSCTeachActivity(tscid, name, weight string, tets []*common.SendTeTWeight) error {
+func AddTSCTeachActivity(tscid, name, weight string, resultWeight string, tets []*common.SendTeTWeight) error {
 	o := orm.NewOrm()
 
 	// 添加教学活动表项
@@ -21,10 +22,15 @@ func AddTSCTeachActivity(tscid, name, weight string, tets []*common.SendTeTWeigh
 	if err != nil {
 		return err
 	}
+	resultWeightNum, err := strconv.ParseInt(resultWeight, 10, 64)
+	if err != nil {
+		return err
+	}
 	ta := &TeachActivity{
-		TSC_id: tscidNum,
-		Name:   name,
-		Weight: weightNum,
+		TSC_id:       tscidNum,
+		Name:         name,
+		Weight:       weightNum,
+		ResultWeight: resultWeightNum,
 	}
 	_, err = o.Insert(ta)
 	if err != nil {
@@ -151,6 +157,14 @@ func GetTSCTeachActivity(tscid string) ([]*TeachActivity, error) {
 	return tas, err
 }
 
+// 获取教学活动项
+func GetTeachActivityChild(tacid string) (*TeachActivityChild, error) {
+	o := orm.NewOrm()
+	tac := &TeachActivityChild{}
+	err := o.Raw("select * from teach_activity_child where id=?", tacid).QueryRow(tac)
+	return tac, err
+}
+
 // 获取教学活动支撑的教学目标
 func GetTASuptTeachTargets(taid string) ([]*TeachTarget, error) {
 	o := orm.NewOrm()
@@ -160,25 +174,35 @@ func GetTASuptTeachTargets(taid string) ([]*TeachTarget, error) {
 	return tets, err
 }
 
+// 获取教学活动项支撑的教学目标
+func GetTACSuptTeachTargets(tacid string) ([]*TACSuptTeT, error) {
+	o := orm.NewOrm()
+	tacSuptTets := make([]*TACSuptTeT, 0)
+	_, err := o.Raw("select * from tac_supt_tet where TAC_id=?", tacid).QueryRows(&tacSuptTets)
+	return tacSuptTets, err
+}
+
 // 获取教学活动带有权值教学目标
-func GetTATeTWs(taid, tscid string) (string, int64, []*common.ModifyGetTeTWeight, error) {
+func GetTATeTWs(taid, tscid string) (string, int64, int64, []*common.ModifyGetTeTWeight, error) {
 	o := orm.NewOrm()
 	mttws := make([]*common.ModifyGetTeTWeight, 0)
 
 	type Temp struct {
-		TAName   string
-		TAWeight int64
+		TAName         string
+		TAWeight       int64
+		TAResultWeight int64
 	}
 	var temp Temp
 	err := o.Raw("select name from teach_activity where id=?", taid).QueryRow(&temp.TAName)
 	err = o.Raw("select weight from teach_activity where id=?", taid).QueryRow(&temp.TAWeight)
+	err = o.Raw("select result_weight from teach_activity where id=?", taid).QueryRow(&temp.TAResultWeight)
 	if err != nil {
-		return temp.TAName, temp.TAWeight, mttws, err
+		return temp.TAName, temp.TAWeight, temp.TAResultWeight, mttws, err
 	}
 
 	tets, err := GetTSCTeachTarget(tscid)
 	if err != nil {
-		return temp.TAName, temp.TAWeight, mttws, err
+		return temp.TAName, temp.TAWeight, temp.TAResultWeight, mttws, err
 	}
 	for i := 0; i < len(tets); i++ {
 		mttw := &common.ModifyGetTeTWeight{}
@@ -186,16 +210,16 @@ func GetTATeTWs(taid, tscid string) (string, int64, []*common.ModifyGetTeTWeight
 		mttw.Description = tets[i].Description
 		err = o.Raw("select id from teach_target_weight_in_teach_activity where TeT_id=? and TA_id=?", tets[i].Id, taid).QueryRow(&mttw.TTWId)
 		if err != nil {
-			return temp.TAName, temp.TAWeight, mttws, err
+			return temp.TAName, temp.TAWeight, temp.TAResultWeight, mttws, err
 		}
 		err = o.Raw("select weight from teach_target_weight_in_teach_activity where TeT_id=? and TA_id=?", tets[i].Id, taid).QueryRow(&mttw.Weight)
 		if err != nil {
-			return temp.TAName, temp.TAWeight, mttws, err
+			return temp.TAName, temp.TAWeight, temp.TAResultWeight, mttws, err
 		}
 		mttws = append(mttws, mttw)
 	}
 
-	return temp.TAName, temp.TAWeight, mttws, nil
+	return temp.TAName, temp.TAWeight, temp.TAResultWeight, mttws, nil
 }
 
 // 根据教学活动Id获取学生
@@ -331,8 +355,304 @@ func GetTAResult(taid string) (*TAResult, error) {
 	return tar, err
 }
 
+type MyTACSuptTeTType struct {
+	TA_id    int64
+	TeT_id   int64
+	TAC_id   int64
+	TAC_name string
+}
+
+type MyTeTSuptGR struct {
+	GR_id       int64
+	TeT_numbers string
+}
+
+type MyTASuptGR struct {
+	GR_id    int64
+	TA_names string
+}
+
+// 成绩分析报告数据结构
+type ResultAnalysisData struct {
+	TAs                  []*TeachActivity
+	TeTs                 []*TeachTarget
+	TACSuptTeT           []*MyTACSuptTeTType
+	TeTSuptGR            []*MyTeTSuptGR
+	TASuptGR             []*MyTASuptGR
+	TeTInTAWeight        []*TeachTargetWeightInTeachActivity
+	AverageResult        []*StuTeTAverageResultInTA
+	LinkResult           []*LinkTotalResult
+	MapTAWeightAndResult map[int64]float64
+	IPs                  []*IndicatorPoint
+	GRs                  []*GraduationRequirement
+}
+
+// 获取成绩分析数据
+func GetResultAnalysisData(tscid string) (*ResultAnalysisData, error) {
+	rad := &ResultAnalysisData{}
+	rad.MapTAWeightAndResult = make(map[int64]float64)
+	var err error
+
+	rad.TAs, err = GetTSCTeachActivity(tscid)
+	if err != nil {
+		return rad, err
+	}
+
+	rad.TeTs, err = GetTSCTeachTarget(tscid)
+	if err != nil {
+		return rad, err
+	}
+
+	o := orm.NewOrm()
+	// 首先清除老数据
+	_, _ = o.Raw("delete from stu_tet_average_result_in_ta").Exec()
+	_, _ = o.Raw("delete from link_total_result").Exec()
+
+	_, err = o.Raw("select * from teach_target_weight_in_teach_activity where TA_id in "+
+		"(select id from teach_activity where TSC_id=?)", tscid).QueryRows(&rad.TeTInTAWeight)
+	if err != nil {
+		return rad, err
+	}
+
+	// 找出课程的所有教学活动
+	var TAIds []*int64
+	_, err = o.Raw("select id from teach_activity where TSC_id=?", tscid).QueryRows(&TAIds)
+	if err != nil {
+		return rad, err
+	}
+
+	for _, taid := range TAIds {
+		// 找出这个教学活动所支撑的所有教学目标
+		var TeTIds []*int64
+		_, err = o.Raw("select TeT_id from teach_target_weight_in_teach_activity where TA_id=? and weight<>0", taid).QueryRows(&TeTIds)
+		if err != nil {
+			return rad, err
+		}
+
+		// 计算学生数目
+		var studentNum int64
+		err = o.Raw("select count(id) from student_join_activity where TA_id=?", taid).QueryRow(&studentNum)
+		if err != nil {
+			return rad, err
+		}
+
+		// 教学目标总成绩
+		var TeTTotalResult float64
+		TeTTotalResult = 0
+
+		for _, tetid := range TeTIds {
+			tacids := make([]int64, 0)
+			_, err = o.Raw("select TAC_id from tac_supt_tet where TeT_id=? and TAC_id in "+
+				"(select id from teach_activity_child where TA_id=?)", tetid, taid).QueryRows(&tacids)
+			for _, tacid := range tacids {
+				tst := &MyTACSuptTeTType{}
+				tst.TA_id = *taid
+				tst.TeT_id = *tetid
+				tst.TAC_id = tacid
+				err = o.Raw("select name from teach_activity_child where id=?", tacid).QueryRow(&tst.TAC_name)
+				rad.TACSuptTeT = append(rad.TACSuptTeT, tst)
+			}
+			/* 例如: 目标1在活动1中的总分为40
+			       题目1(10分)   题目2(10分)  题目3(10分)
+			学生1   1              2             3
+			学生2   4              5             6
+			学生3   3              2             1
+
+			学生1的目标达成度 = (1+2+3)/(10+10+10) * 40
+			学生2的目标达成都 = (4+5+6)/(10+10+10) * 40
+			学生3的目标达成度 = (3+2+1)/(10+10+10) * 40
+
+			目标达成度平均值为 ((1+2+3)/(10+10+10) * 40 + (4+5+6)/(10+10+10) * 40 + (3+2+1)/(10+10+10) * 40)/3
+
+			同等于  ((40*(1+2+3+4+5+6+3+2+1))/(10+10+10))/3
+			即累加查到的成绩表项的成绩，然后除以学生数，就等于项目达成度平均值
+			*/
+			var tetWeight int64
+			// 找出这个教学目标在教学活动中占的分数
+			err = o.Raw("select weight from teach_target_weight_in_teach_activity where TA_id=? and TeT_id=?", taid, tetid).QueryRow(&tetWeight)
+			if err != nil {
+				return rad, err
+			}
+
+			// 找出支撑这个教学目标的所有教学活动项
+			var TACIds []*string
+			_, err = o.Raw("select TAC_id from tac_supt_tet where TeT_id=?", tetid).QueryRows(&TACIds)
+			if err != nil {
+				return rad, err
+			}
+
+			// 筛选出属于这个教学活动的TAC_id
+			var TACIds2 []*string
+			sqlString := "select id from teach_activity_child where TA_id=" + strconv.FormatInt(*taid, 10) + " and id in ("
+			var sep string
+			for _, tacid := range TACIds {
+				sqlString += sep + *tacid
+				sep = ","
+			}
+			sqlString += ")"
+			_, err := o.Raw(sqlString).QueryRows(&TACIds2)
+			if err != nil {
+				return rad, err
+			}
+
+			// 获取总成绩
+			var totalResult float64
+			// 然后在学生参与教学活动项表中找出这些TAC_id的成绩表项
+			sqlString = "select SUM(result) from student_join_activity_child where TAC_id in ("
+			sep = ""
+			for _, tacid := range TACIds2 {
+				sqlString += sep + *tacid
+				sep = ","
+			}
+			sqlString += ")"
+			err = o.Raw(sqlString).QueryRow(&totalResult)
+			if err != nil {
+				return rad, err
+			}
+
+			// 获取总分数
+			var totalValue float64
+			sqlString = "select SUM(value) from teach_activity_child where id in ("
+			sep = ""
+			for _, tacid := range TACIds2 {
+				sqlString += sep + *tacid
+				sep = ","
+			}
+			sqlString += ")"
+			err = o.Raw(sqlString).QueryRow(&totalValue)
+			if err != nil {
+				return rad, err
+			}
+
+			AvgeResult := &StuTeTAverageResultInTA{}
+			// 计算平均成绩
+			AvgeResult.TeT_id = *tetid
+			AvgeResult.TA_id = *taid
+			AvgeResult.Result, err = strconv.ParseFloat(fmt.Sprintf("%.2f", ((float64(tetWeight)*totalResult)/totalValue)/float64(studentNum)), 64)
+			TeTTotalResult += AvgeResult.Result
+			_, err = o.Insert(AvgeResult)
+			if err != nil {
+				return rad, err
+			}
+		}
+
+		ltr := &LinkTotalResult{
+			TA_id:  *taid,
+			Result: TeTTotalResult,
+		}
+		_, err = o.Insert(ltr)
+		if err != nil {
+			return rad, err
+		}
+		var mapKey int64
+		err = o.Raw("select weight from teach_activity where id=?", *taid).QueryRow(&mapKey)
+		if err != nil {
+			return rad, err
+		}
+		rad.MapTAWeightAndResult[mapKey] = TeTTotalResult
+	}
+
+	_, err = o.Raw("select * from stu_tet_average_result_in_ta where TA_id in "+
+		"(select id from teach_activity where TSC_id=?)", tscid).QueryRows(&rad.AverageResult)
+	if err != nil {
+		return rad, err
+	}
+
+	_, err = o.Raw("select * from link_total_result where TA_id in "+
+		"(select id from teach_activity where TSC_id=?)", tscid).QueryRows(&rad.LinkResult)
+
+	rad.GRs, rad.IPs, err = GetTSCAllIP(tscid)
+	if err != nil {
+		return rad, err
+	}
+
+	for _, gr := range rad.GRs {
+		tetSuptGR := &MyTeTSuptGR{}
+		tetSuptGR.GR_id = gr.Id
+		tetSuptGR.TeT_numbers = ""
+
+		numbers := make([]string, 0)
+
+		_, err = o.Raw("select number from teach_target where id in "+
+			"(select TeT_id from tet_supt_ip where IP_id in "+
+			"(select id from indicator_point where GR_id=? and id in "+
+			"(select distinct IP_id from tet_supt_ip where TeT_id in "+
+			"(select id from teach_target where TSC_id=?)))) order by number", gr.Id, tscid).QueryRows(&numbers)
+		sep := ""
+		for _, number := range numbers {
+			tetSuptGR.TeT_numbers += sep + number
+			sep = ", "
+		}
+
+		rad.TeTSuptGR = append(rad.TeTSuptGR, tetSuptGR)
+	}
+
+	for _, gr := range rad.GRs {
+		taSuptGR := &MyTASuptGR{}
+		taSuptGR.GR_id = gr.Id
+		taSuptGR.TA_names = ""
+
+		names := make([]string, 0)
+		_, err = o.Raw("select name from teach_activity where id in "+
+			"(select TA_id from teach_activity_child where id in "+
+			"(select TAC_id from tac_supt_tet where TeT_id in"+
+			"(select TeT_id from tet_supt_ip where TeT_id in "+
+			"(select id from teach_target where TSC_id=?) and IP_id in"+
+			"(select id from indicator_point where GR_id=?))))", tscid, gr.Id).QueryRows(&names)
+		sep := ""
+		for _, name := range names {
+			taSuptGR.TA_names += sep + name
+			sep = ", "
+		}
+		rad.TASuptGR = append(rad.TASuptGR, taSuptGR)
+	}
+	return rad, err
+}
+
+// 获取课程信息
+func GetCourseAndTSC(tscid string) (*Course, *TeacherSelectCourse, error) {
+	course := &Course{}
+	tsc, err := GetTSCBaseById(tscid)
+	if err != nil {
+		return course, tsc, err
+	}
+	o := orm.NewOrm()
+
+	err = o.Raw("select * from Course where id in "+
+		"(select course_id from major_map_course where id in "+
+		"(select mmc_id from teacher_select_course where id=?))", tscid).QueryRow(course)
+	return course, tsc, err
+}
+
+// 获取课程成绩分析报告信息
+func GetTSCResultAnalysisReport(tscid string) (*ResultAnalysisReport, error) {
+	o := orm.NewOrm()
+	rar := &ResultAnalysisReport{}
+	err := o.Raw("select * from result_analysis_report where TSC_id=?", tscid).QueryRow(rar)
+	return rar, err
+}
+
+// 获取课程所支撑的所有毕业指标点
+func GetTSCAllIP(tscid string) ([]*GraduationRequirement, []*IndicatorPoint, error) {
+	o := orm.NewOrm()
+	ips := make([]*IndicatorPoint, 0)
+	grs := make([]*GraduationRequirement, 0)
+	_, err := o.Raw("select * from indicator_point where id in "+
+		"(select distinct IP_id from tet_supt_ip where TeT_id in "+
+		"(select id from teach_target where TSC_id=?)) order by number", tscid).QueryRows(&ips)
+	if err != nil {
+		return grs, ips, err
+	}
+
+	_, err = o.Raw("select * from graduation_requirement where id in "+
+		"(select distinct GR_id from indicator_point where id in "+
+		"(select distinct IP_id from tet_supt_ip where TeT_id in "+
+		"(select id from teach_target where TSC_id=?))) order by number", tscid).QueryRows(&grs)
+	return grs, ips, err
+}
+
 // 修改教学活动
-func ModifyTSCTeachActivity(taid, name, weight string, tetwms []*common.SendTeTWeightToModify) error {
+func ModifyTSCTeachActivity(taid, name, weight, resultWeight string, tetwms []*common.SendTeTWeightToModify) error {
 	o := orm.NewOrm()
 
 	// 修改教学活动表项
@@ -344,13 +664,17 @@ func ModifyTSCTeachActivity(taid, name, weight string, tetwms []*common.SendTeTW
 	if err != nil {
 		return err
 	}
+	resultWeightNum, err := strconv.ParseInt(resultWeight, 10, 64)
+	if err != nil {
+		return err
+	}
 	ta := &TeachActivity{Id: taidNum}
 	// Read方法会检测major哪些字段被赋非0值，然后按照这些值的限定去查找匹配的记录
 	err = o.Read(ta)
 	if err == nil {
 		ta.Name = name
 		ta.Weight = weightNum
-
+		ta.ResultWeight = resultWeightNum
 		_, err = o.Update(ta) // 将修改更新到数据库
 		if err != nil {
 			return err
@@ -364,6 +688,58 @@ func ModifyTSCTeachActivity(taid, name, weight string, tetwms []*common.SendTeTW
 	return nil
 }
 
+// 修改教学活动项
+func ModifyTSCTeachActivityChild(tacid, tacname, tacvalue string, tetIds []string) error {
+	o := orm.NewOrm()
+
+	// 修改活动项信息
+	_, err := o.Raw("update teach_activity_child set name=?,value=? where id=?", tacname, tacvalue, tacid).Exec()
+	if err != nil {
+		return err
+	}
+
+	// 删除旧有支持目标
+	_, err = o.Raw("delete from tac_supt_tet where TAC_id=?", tacid).Exec()
+	if err != nil {
+		return err
+	}
+
+	// 添加新支持目标
+	for _, tetId := range tetIds {
+		_, err = o.Raw("insert into tac_supt_tet(TAC_id, TeT_id) values(?, ?)", tacid, tetId).Exec()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// 修改课程成绩报告
+func ModifyTSCResultAnalysisReport(id, pt, rept, aesn, el, it, tetim, gripim, tetfa string) error {
+	o := orm.NewOrm()
+	idNum, err := strconv.ParseInt(id, 10, 64)
+	aesnNum, err := strconv.ParseInt(aesn, 10, 64)
+	rar := &ResultAnalysisReport{Id: idNum}
+
+	err = o.Read(rar)
+	if err == nil {
+		rar.ActualExamStudentNumber = aesnNum
+		rar.ExamLocation = el
+		rar.TeTImprovementMeasures = tetim
+		rar.GRIPImprovementMeasures = gripim
+		rar.InvigilationTeacher = it
+		rar.ProblemTeacher = pt
+		rar.ReadExamPaperTeacher = rept
+		rar.TeTFinishAnalysis = tetfa
+
+		_, err = o.Update(rar) // 将修改更新到数据库
+		if err != nil {
+			return err
+		}
+	}
+	return err
+}
+
 // 删除教学活动
 func DeleteTSCTeachActivity(taid string) error {
 	o := orm.NewOrm()
@@ -371,7 +747,35 @@ func DeleteTSCTeachActivity(taid string) error {
 	if err != nil {
 		return err
 	}
-	_, err = o.Raw("delete from teach_target_weight_in_teach_activity where TA_id=?", taid).Exec()
+
+	// 删除教学活动支撑教学目标表项
+	_, _ = o.Raw("delete from teach_target_weight_in_teach_activity where TA_id=?", taid).Exec()
+	// 删除教学活动下面的所有活动项
+	_, _ = o.Raw("delete from teach_activity_child where TA_id=?", taid).Exec()
+	// 删除参加教学活动的学生的成绩
+	_, _ = o.Raw("delete from student_join_activity where TA_id=?", taid).Exec()
+	// 删除参加教学活动的所有教学活动的学生的成绩
+	_, _ = o.Raw("delete from student_join_activity_child where student_id in "+
+		"(select student_id from student_join_activity where TA_id=?)", taid).Exec()
+
+	return nil
+}
+
+// 删除教学活动项
+func DeleteTSCTeachActivityChild(tacid string) error {
+	o := orm.NewOrm()
+	// 删除教学活动项
+	_, err := o.Raw("delete from teach_activity_child where id=?", tacid).Exec()
+	if err != nil {
+		return err
+	}
+	// 删除教学活动支撑教学目标
+	_, err = o.Raw("delete from tac_supt_tet where TAC_id=?", tacid).Exec()
+	if err != nil {
+		return err
+	}
+	// 删除学生参加教学活动项
+	_, err = o.Raw("delete from student_join_activity_child where TAC_id=?", tacid).Exec()
 	return err
 }
 

@@ -6,6 +6,12 @@
         font-family: 华文楷体;
     }
 </style>
+
+<script type="text/javascript">
+    function Back(mid){
+        window.location = "/admin/major_course?mid="+mid;
+    }
+</script>
 </head>
 
 
@@ -29,7 +35,7 @@
                         <div class="form-group">
                             <form action="/admin/major_course_modify" method="post">
                                 <h3>选择课程</h3><br><br>
-                                <input type="hidden" name="Mid" value="{{.Mid}}">
+                                <input id="MidText" type="hidden" name="Mid" value="{{.Mid}}">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -55,6 +61,8 @@
                                     </tbody>
                                 </table>
                             <button type="submit">提交修改</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" onclick="Back({{.Mid}})">取消修改</button>
                             </form>
                         </div>
                     </div>

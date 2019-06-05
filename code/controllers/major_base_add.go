@@ -31,9 +31,9 @@ func (this *MajorBaseAddController) Post() {
 	StudyYears, _ := strconv.ParseInt(this.Input().Get("StudyYears"), 10, 64)
 	Degree := this.Input().Get("Degree")
 	CoreCourse := this.Input().Get("CoreCourse")
-	TotalCredits, _ := strconv.ParseInt(this.Input().Get("TotalCredits"), 10, 64)
-	TheoryCredits, _ := strconv.ParseInt(this.Input().Get("TheoryCredits"), 10, 64)
-	PracticeCredits, _ := strconv.ParseInt(this.Input().Get("PracticeCredits"), 10, 64)
+	TotalCredits, _ := strconv.ParseFloat(this.Input().Get("TotalCredits"), 64)
+	TheoryCredits, _ := strconv.ParseFloat(this.Input().Get("TheoryCredits"), 64)
+	PracticeCredits, _ := strconv.ParseFloat(this.Input().Get("PracticeCredits"), 64)
 
 	// 调用添加专业方法
 	err := models.AddMajor(MajorNumber, MajorName, TrTOverview, MainSubject, Degree, CoreCourse,

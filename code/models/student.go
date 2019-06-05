@@ -39,6 +39,10 @@ func AddStudent(number, name, class, grade, majorName string) error {
 	// 获取学生自己的Id
 	var studentId int64
 	err = o.Raw("select id from student where number=?", number).QueryRow(&studentId)
+	if err != nil {
+		return err
+	}
+
 	for _, taid := range taIds {
 		sJA := &StudentJoinActivity{
 			TA_id:      taid,
@@ -129,5 +133,12 @@ func DeleteStudent(sid string) error {
 		_, err = o.Delete(student)
 		return err
 	}
+
+	// 删除学生参加活动、活动项的表项
+	_, err = o.Raw("delete from student_join_activity_child where student_id=?", sid).Exec()
+	if err != nil {
+		return err
+	}
+	_, err = o.Raw("delete from student_join_activity where student_id=?", sid).Exec()
 	return err
 }

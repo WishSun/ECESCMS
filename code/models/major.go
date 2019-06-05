@@ -10,7 +10,7 @@ import (
 
 // 添加新专业
 func AddMajor(_MajorNumber, _MajorName, _TrTOverview, _MainSubject, _Degree, _CoreCourse string,
-	_StudyYears, _TotalCredits, _TheoryCredits, _PracticeCredits int64) error {
+	_StudyYears int64, _TotalCredits, _TheoryCredits, _PracticeCredits float64) error {
 	o := orm.NewOrm()
 
 	major := &Major{
@@ -71,7 +71,7 @@ func GetMajorAllCourse(mid string) ([]Course, error) {
 }
 
 // 根据mmcId获取专业名称
-func GetMajorNameByMMCId(mmcId string)(string, error){
+func GetMajorNameByMMCId(mmcId string) (string, error) {
 	o := orm.NewOrm()
 
 	var major_name string
@@ -80,7 +80,7 @@ func GetMajorNameByMMCId(mmcId string)(string, error){
 }
 
 // 根据专业名获取专业Id
-func GetMajorIdByMajorName(majorName string)(string, error){
+func GetMajorIdByMajorName(majorName string) (string, error) {
 	o := orm.NewOrm()
 	var mid int64
 	err := o.Raw("select id from major where name=?", majorName).QueryRow(&mid)
@@ -204,15 +204,16 @@ func ModifyMajorBase(_Mid, _MajorNumber, _MajorName, _TrTOverview, _MainSubject,
 	if err != nil {
 		return err
 	}
-	totalCredits, err := strconv.ParseInt(_TotalCredits, 10, 64)
+	totalCredits, err := strconv.ParseFloat(_TotalCredits, 64)
+
 	if err != nil {
 		return err
 	}
-	theoryCredits, err := strconv.ParseInt(_TheoryCredits, 10, 64)
+	theoryCredits, err := strconv.ParseFloat(_TheoryCredits, 64)
 	if err != nil {
 		return err
 	}
-	practiceCredits, err := strconv.ParseInt(_PracticeCredits, 10, 64)
+	practiceCredits, err := strconv.ParseFloat(_PracticeCredits, 64)
 	if err != nil {
 		return err
 	}

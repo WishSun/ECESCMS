@@ -37,8 +37,9 @@
                 <h1 class="page-header">
                     课程基本信息
                 </h1>
+                <a href="/teacher/my_course_manager" style="font-size: 20px">返回上一页</a><br><br>
                 <a href="/teacher/my_course_base_modify?tscid={{.TSCId}}" style="font-size: 20px">修改基本信息</a>
-                <br><br><br>
+                <br>
             </div>
         </div>
 
@@ -110,7 +111,7 @@
 
                             <h3>教学内容结构关系图：</h3>
                             <div class="myDiv">
-                                <p>{{.ContentRelationImgPath}}</p>
+                                <img alt="教学内容结构关系图" src="../static/attachment/{{.ContentRelationImgPath}}"/>
                                 <br>
                             </div>
 

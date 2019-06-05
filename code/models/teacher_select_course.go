@@ -18,11 +18,11 @@ func GetAllGrade() ([]string, error) {
 }
 
 // 根据id获取选课课程基本信息
-func GetTSCBaseById(tscid string)(*TeacherSelectCourse, error){
+func GetTSCBaseById(tscid string) (*TeacherSelectCourse, error) {
 	o := orm.NewOrm()
 	tsc := &TeacherSelectCourse{}
 	tscidNum, err := strconv.ParseInt(tscid, 10, 64)
-	if err != nil{
+	if err != nil {
 		return tsc, err
 	}
 
@@ -88,7 +88,7 @@ func ModifyMajorTSC(mid, grade string, CourseIds, teacherInfos []string) error {
 			Grade:      grade,
 		}
 		_, err = o.Insert(tsc)
-		if err != nil{
+		if err != nil {
 			return err
 		}
 	}
@@ -98,7 +98,7 @@ func ModifyMajorTSC(mid, grade string, CourseIds, teacherInfos []string) error {
 // 修改选课课程基本信息
 func ModifyTSCBase(_Tscid, _Term, _Credit, _TestMethod, _TotalPeriod, _TheoryPeriod, _ExperimentalPeriod, _ComputerPeriod,
 	_PracticePeriod, _WeekPeriod, _ContentRelationImgPath, _TeachTargetOverview, _ClassroomTeachTargetOverview,
-	_ExperimentTeachTargetOverview, _CourseTask, _TeachMethod, _RelationOtherCourse, _Category string)error{
+	_ExperimentTeachTargetOverview, _CourseTask, _TeachMethod, _RelationOtherCourse, _Category string) error {
 	// 将数值字段的string转为int64
 	tscid, err := strconv.ParseInt(_Tscid, 10, 64)
 	if err != nil {
@@ -108,7 +108,7 @@ func ModifyTSCBase(_Tscid, _Term, _Credit, _TestMethod, _TotalPeriod, _TheoryPer
 	if err != nil {
 		return err
 	}
-	credit, err := strconv.ParseInt(_Credit, 10, 64)
+	credit, err := strconv.ParseFloat(_Credit, 64)
 	if err != nil {
 		return err
 	}

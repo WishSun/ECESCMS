@@ -29,6 +29,7 @@ func (this *MyCourseActivityChildStudentResultManagerController) Post() {
 
 	sid := this.Input().Get("SId")
 	taid := this.Input().Get("TAId")
+	tscid := this.Input().Get("TSCId")
 	tacIds := this.Ctx.Request.Form["TACIds"]
 	stacResults := this.Ctx.Request.Form["STACResults"]
 
@@ -37,7 +38,7 @@ func (this *MyCourseActivityChildStudentResultManagerController) Post() {
 		logs.Error(err)
 	}
 
-	this.Redirect(fmt.Sprintf("/teacher/my_course_activity_child_student_result_manager?sid=%s&taid=%s", sid, taid), 302)
+	this.Redirect(fmt.Sprintf("/teacher/my_course_activity_child_student_result_manager?sid=%s&taid=%s&tscid=%s", sid, taid, tscid), 302)
 }
 
 func (this *MyCourseActivityChildStudentResultManagerController) GetStudentAllTAChildResult() {

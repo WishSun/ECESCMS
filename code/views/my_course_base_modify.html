@@ -55,7 +55,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-8">
-                                <form role="form" action="/teacher/my_course_base" method="POST">
+                                <form role="form" action="/teacher/my_course_base_modify" method="POST" enctype="multipart/form-data">
                                     <div class="form-group" style="width: 400px;margin-left: 100px">
                                         {{with .TSC}}
                                             <div style="width: 300px;">
@@ -122,9 +122,26 @@
                                                 <label>教学内容结构关系图：</label>
                                                 <div class="form-group">
                                                     <small>选择图片文件</small>
-                                                    <input type="file" name="TSCContentRelationImgPath" value="ContentRelationImgPath">
+                                                    <input id="chooseImage" type="file" name="TSCContentRelationImgPath">
+                                                    <!-- 展示缩略图-->
+                                                    <img id="cropedBigImg" alt="教学内容结构关系图" src="../attachment/{{.ContentRelationImgPath}}"/>
                                                 </div>
                                                 <br>
+                                                <script>
+                                                    $('#chooseImage').on('change',function(){
+                                                        var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+                                                            fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
+                                                            src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+
+                                                        // 检查是否是图片
+                                                        if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+                                                            error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+                                                            return;
+                                                        }
+
+                                                        $('#cropedBigImg').attr('src',src);
+                                                    });
+                                                </script>
                                             </div>
 
 

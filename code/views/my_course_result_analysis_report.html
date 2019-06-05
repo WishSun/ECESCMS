@@ -1,0 +1,365 @@
+{{template "header"}}  <!-- 引入头模板内容 -->
+<title>管理员首页</title>
+<style>
+    .titleTd{
+        width:100px;
+        font-size: 20px;
+        font-weight: bolder;
+    }
+
+    .valueTd{
+        width:150px;
+        font-size: 15px;
+    }
+</style>
+
+<script type="text/javascript">
+    // 添加教学活动信息
+    function AddActivityInfo(tscid) {
+        $.post("/teacher/my_course_result_analysis_report/get_activity_info",{
+            TSCId:tscid
+        },function(data){
+            if(data.Code == 0){
+                if (data.AnalysisData.TAs != null){
+                    for(i = 0; i < data.AnalysisData.TAs.length; i++){
+                        $("#TableHeadTr").append("<th></th><th></th><th></th>")
+                    }
+
+                    $("#TableBody").append('<tr id="tableTitle"></tr>');
+                    $("#TableBody").append('<tr id="tableTitleSub"></tr>');
+                    $("#tableTitle").append('<td rowspan="2">教学目标</td>');
+                    for(i = 0; i < data.AnalysisData.TAs.length; i++){
+                        $("#tableTitle").append('<td colspan="3">'+data.AnalysisData.TAs[i].Name+'（100分）</td>');
+                        $("#tableTitleSub").append('<td>序号</td><td>分数</td><td>平均分</td>')
+                    }
+
+                    // 设置教学目标成绩部分表结构
+                    for(i = 0; i < data.AnalysisData.TeTs.length; i++){
+                        $("#TableBody").append('<tr id="tet'+ data.AnalysisData.TeTs[i].Id+'"></tr>');
+                        $("#tet"+data.AnalysisData.TeTs[i].Id).append('<td>'+data.AnalysisData.TeTs[i].Number+'</td>');
+
+                        for(j = 0; j < data.AnalysisData.TAs.length ; j++){
+                            $("#tet"+data.AnalysisData.TeTs[i].Id).append('<td id="TACSuptTeT'+data.AnalysisData.TeTs[i].Id+data.AnalysisData.TAs[j].Id+'"></td>');
+                            $("#tet"+data.AnalysisData.TeTs[i].Id).append('<td id="TeTInTAWeight'+data.AnalysisData.TeTs[i].Id+data.AnalysisData.TAs[j].Id+'"></td>');
+                            $("#tet"+data.AnalysisData.TeTs[i].Id).append('<td id="AverageResult'+data.AnalysisData.TeTs[i].Id+data.AnalysisData.TAs[j].Id+'"></td>');
+                        }
+                    }
+                    // 设置教学目标成绩部分表数据
+                    for(i = 0; i < data.AnalysisData.TACSuptTeT.length; i++){
+                        document.getElementById("TACSuptTeT"+data.AnalysisData.TACSuptTeT[i].TeT_id+data.AnalysisData.TACSuptTeT[i].TA_id).innerText += data.AnalysisData.TACSuptTeT[i].TAC_name + ", ";
+                    }
+                    for(i = 0; i < data.AnalysisData.TeTInTAWeight.length; i++){
+                        document.getElementById("TeTInTAWeight"+data.AnalysisData.TeTInTAWeight[i].TeT_id+data.AnalysisData.TeTInTAWeight[i].TA_id).innerText = data.AnalysisData.TeTInTAWeight[i].Weight;
+                    }
+                    if (data.AnalysisData.AverageResult != null){
+                        for(i = 0; i < data.AnalysisData.AverageResult.length; i++){
+                            document.getElementById("AverageResult"+data.AnalysisData.AverageResult[i].TeT_id+data.AnalysisData.AverageResult[i].TA_id).innerText = data.AnalysisData.AverageResult[i].Result;
+                        }
+                    }
+
+
+                    // 各环节成绩
+                    $("#TableBody").append('<tr id="ResultOfLink"><td>各环节成绩</td></tr>');
+                    for(i = 0; i < data.AnalysisData.TAs.length; i++){
+                        $("#ResultOfLink").append('<td colspan="3" id="ResultOfLink'+data.AnalysisData.TAs[i].Id+'"></td>')
+                    }
+                    if(data.AnalysisData.LinkResult != null){
+                        for(i = 0; i < data.AnalysisData.LinkResult.length; i++){
+                            document.getElementById("ResultOfLink"+data.AnalysisData.LinkResult[i].TA_id).innerText = data.AnalysisData.LinkResult[i].Result;
+                        }
+                    }
+
+                    var cols = data.AnalysisData.TAs.length * 3 + 1;
+                    $("#TableBody").append('<tr><td style="text-align: center;font-weight: bolder;" colspan="'+cols+'">课程各考核环节权重分配（作业、测验、实验根据实际情况自行分配权重，考试占0.5-0.7）</td></tr>');
+
+                    // 各环节比重
+                    $("#TableBody").append('<tr id="weightOfLinkTitle"><td>考核环节</td></tr>');
+                    $("#TableBody").append('<tr id="weightOfLinkValue"><td>权重（和为1）</td></tr>');
+                    for(i = 0; i < data.AnalysisData.TAs.length; i++) {
+                        $("#weightOfLinkTitle").append('<td colspan="3">'+data.AnalysisData.TAs[i].Name+'</td>');
+                        $("#weightOfLinkValue").append('<td colspan="3">'+data.AnalysisData.TAs[i].Weight+'%</td>');
+                    }
+
+                    var sep = " = ";
+                    var totalResult = 0.0;
+                    for(var key in data.AnalysisData.MapTAWeightAndResult){
+                        document.getElementById("TeTFinishAnalysis").innerHTML += sep + data.AnalysisData.MapTAWeightAndResult[key] + "*" + key + "%";
+                        sep = "+ ";
+                        totalResult += data.AnalysisData.MapTAWeightAndResult[key] * key / 100;
+                    }
+                    document.getElementById("TeTFinishAnalysis").innerHTML += "= " +totalResult;
+                }
+
+                if (data.AnalysisData.IPs != null && data.AnalysisData.GRs != null){
+                    for(i = 0; i < data.AnalysisData.GRs.length; i++){
+                        $("#GRIPAnalysisView").append('<label>支撑毕业要求'+data.AnalysisData.GRs[i].Number+'的情况分析：</label><br>' +
+                            '<div id="AnalysisDiv"><span  id="pGR'+data.AnalysisData.GRs[i].Id+'">本课程支撑毕业要求指标点</span ></div><br>');
+                    }
+                    for(i = 0; i < data.AnalysisData.IPs.length; i++){
+                        document.getElementById("pGR"+data.AnalysisData.IPs[i].GR_id).innerHTML += data.AnalysisData.IPs[i].Number + "，";
+                    }
+                    for(i = 0; i < data.AnalysisData.TeTSuptGR.length; i++){
+                        document.getElementById("pGR"+data.AnalysisData.TeTSuptGR[i].GR_id).innerHTML += "由"+data.AnalysisData.TeTSuptGR[i].TeT_numbers+"支撑，"
+                    }
+                    for(i = 0; i < data.AnalysisData.TASuptGR.length; i++){
+                        document.getElementById("pGR"+data.AnalysisData.TASuptGR[i].GR_id).innerHTML += "该毕业要求主要由" + data.AnalysisData.TASuptGR[i].TA_names + "部分支撑,";
+                    }
+                }
+            }
+        },"json");
+    }
+
+    // 调整成绩分析报告
+    function ModifyReport() {
+        viewElem("TeTFinishSituationModify");
+        viewElem("PTModify");
+        viewElem("REPTModify");
+        viewElem("AESNModify");
+        viewElem("ELModify");
+        viewElem("ITModify");
+        viewElem("Button");
+        viewElem("GRIPImprovementMeasuresModify");
+        hideElem("TeTFinishSituationView");
+        hideElem("PTView");
+        hideElem("REPTView");
+        hideElem("AESNView");
+        hideElem("ELView");
+        hideElem("ITView");
+        hideElem("GRIPImprovementMeasuresView");
+    }
+
+    // 取消修改
+    function CancelModifyReport() {
+        hideElem("TeTFinishSituationModify");
+        hideElem("PTModify");
+        hideElem("REPTModify");
+        hideElem("AESNModify");
+        hideElem("ELModify");
+        hideElem("ITModify");
+        hideElem("GRIPImprovementMeasuresModify");
+        viewElem("TeTFinishSituationView");
+        viewElem("PTView");
+        viewElem("REPTView");
+        viewElem("AESNView");
+        viewElem("ELView");
+        viewElem("ITView");
+        viewElem("GRIPImprovementMeasuresView");
+    }
+
+    function hideElem(id){
+        document.getElementById(id).style.display = "none"
+    }
+
+    function viewElem(id) {
+        document.getElementById(id).style.display = "block"
+    }
+</script>
+</head>
+
+<body style="background-color:#222222;">
+<div class="navbar navbar-default top-navbar navbar-inverse" style="background-color: #222222">
+    <div class="container">
+        <div class="pull-left">
+            <img  src="../static/img/logo.png">
+        </div>
+        <div class="pull-right" style="margin-top: 30px">
+            <ul class="nav navbar-nav"  style="margin-top: 10px">
+                <li><div style="color:whitesmoke;font-size: 130%;font-family: 宋体">{{.TeacherName}} 老师</div></li>
+                <li><div style="margin-left:10px;color:whitesmoke;font-size: 130%;font-family: 宋体"><a href="/login?obj=admin">退出</a></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{{template "teacher_body_header"}} <!-- 引入body头模板内容-->
+
+
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1  class="page-header">
+                    我的课程管理
+                    <input type="hidden" id="TSCIdText" value="{{.TSCId}}">
+                </h1>
+                <button type="button" onclick="ModifyReport()">调整成绩分析报告</button><br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form action="/teacher/my_course_result_analysis_report" method="post">
+                            <input type="hidden" name="TSCId" value="{{.TSCId}}">
+                            <input type="hidden" name="Id" value="{{.AnalysisReport.Id}}">
+                            <table class="table table-striped table-bordered table-hover">
+                                <caption style="font-weight: bolder;font-size: 30px">西安工程大学课程成绩分析报告<br><br></caption>
+                                <tbody>
+                                <tr>
+                                    <td class="titleTd">课程名称</td>
+                                    <td class="valueTd">{{.Course.NameCN}}</td>
+                                    <td class="titleTd">学时/学分</td>
+                                    <td class="valueTd">{{.TSC.TotalPeriod}}/{{.TSC.Credit}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titleTd">上课班级</td>
+                                    <td class="valueTd">课程A</td>
+                                    <td class="titleTd">考试/考察</td>
+                                    <td class="valueTd">{{.TSC.TestMethod}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titleTd">命题教师</td>
+                                    <td class="valueTd">
+                                        <div id="PTView">
+                                            <label >{{.AnalysisReport.ProblemTeacher}}</label>
+                                        </div>
+                                        <div id="PTModify" style="display: none">
+                                            <input name="PTText" value="{{.AnalysisReport.ProblemTeacher}}">
+                                        </div>
+                                    </td>
+                                    <td class="titleTd">阅卷教师</td>
+                                    <td class="valueTd">
+                                        <div id="REPTView">
+                                            <label>{{.AnalysisReport.ReadExamPaperTeacher}}</label>
+                                        </div>
+                                        <div id="REPTModify" style="display: none">
+                                            <input name="REPTText" value="{{.AnalysisReport.ReadExamPaperTeacher}}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="titleTd">应考人数</td>
+                                    <td class="valueTd">34</td>
+                                    <td class="titleTd">实考人数</td>
+                                    <td class="valueTd">
+                                        <div id="AESNView">
+                                            <label>{{.AnalysisReport.ActualExamStudentNumber}}</label>
+                                        </div>
+                                        <div id="AESNModify" style="display: none">
+                                            <input name="AESNText" value="{{.AnalysisReport.ActualExamStudentNumber}}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="titleTd">考试地点</td>
+                                    <td class="valueTd">
+                                        <div id="ELView">
+                                            <label>{{.AnalysisReport.ExamLocation}}</label>
+                                        </div>
+                                        <div id="ELModify" style="display: none">
+                                            <input name="ELText" value="{{.AnalysisReport.ExamLocation}}">
+                                        </div>
+                                    </td>
+                                    <td class="titleTd">监考教师</td>
+                                    <td class="valueTd">
+                                        <div id="ITView">
+                                            <label>{{.AnalysisReport.InvigilationTeacher}}</label>
+                                        </div>
+                                        <div id="ITModify" style="display: none">
+                                            <input name="ITText" value="{{.AnalysisReport.InvigilationTeacher}}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="titleTd" style="vertical-align: middle">教学目标</td>
+                                    <td colspan="3">
+                                        {{range .TeTs}}
+                                            <label>{{.Number}} : {{.Description}}</label><br>
+                                        {{end}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" class="titleTd" style="vertical-align: middle">课程目标达成度评价</td>
+                                    <td colspan="3" class="titleTd" style="text-align: center">课程各考核环节对课程教学目标的覆盖率<br></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <table class="table  table-bordered table-hover" style="border: 0px">
+                                           <thead style="display: none">
+                                           <tr id="TableHeadTr">
+                                           </tr>
+                                           </thead>
+                                           <tbody id="TableBody">
+                                           <script>
+                                               AddActivityInfo(document.getElementById("TSCIdText").value)
+                                           </script>
+                                           </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" class="titleTd" style="vertical-align: middle">课程目标达成度分析及持续改进措施</td>
+                                    <td colspan="3">
+                                        课程教学目标的达成情况分析：（计算公式：
+                                        <img src="../static/img/计算公式.png">
+                                        达成度≥68，教学目标达成。）<br>
+                                        课程教学目标的达成情况：<br>
+                                        <img src="../static/img/计算公式.png"><span id="TeTFinishAnalysis"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div id="TeTFinishSituationView">
+                                            <label style="font-size: 15px">课程教学目标的达成度分析:</label>
+                                            <p>{{.AnalysisReport.TeTFinishAnalysis}}</p>
+                                            <label style="font-size: 15px">改进措施：</label>
+                                            <p>{{.AnalysisReport.TeTImprovementMeasures}}</p>
+                                        </div>
+                                        <div id="TeTFinishSituationModify" style="display: none">
+                                            <label style="font-size: 15px">课程教学目标的达成度分析:</label>
+                                            <textarea class="form-control" rows="4" name="TeTFinishAnalysis">{{.AnalysisReport.TeTFinishAnalysis}}</textarea>
+                                            <label style="font-size: 15px">改进措施：</label>
+                                            <textarea class="form-control" rows="4" name="TeTImprovementMeasures">{{.AnalysisReport.TeTImprovementMeasures}}</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="titleTd" style="vertical-align: middle">课程对毕业要求指标点支撑情况分析及持续改进措施</td>
+                                    <td colspan="3">
+                                        <div id="GRIPAnalysisView">
+                                        </div>
+                                        <div id="GRIPImprovementMeasuresView">
+                                            <label style="font-size: 15px">改进措施：</label>
+                                            <p>{{.AnalysisReport.GRIPImprovementMeasures}}</p>
+                                        </div>
+                                        <div id="GRIPImprovementMeasuresModify" style="display: none">
+                                           <label style="font-size: 15px">改进措施：</label>
+                                           <textarea class="form-control" rows="4" name="GRIPImprovementMeasures">{{.AnalysisReport.GRIPImprovementMeasures}}</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                                <div id="Button" style="display: none">
+                                <button type="submit">提交修改</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" onclick="CancelModifyReport()">取消修改</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script type="text/javascript" src="../static/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script type="text/javascript" src="../static/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="../static/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script type="text/javascript" src="../static/js/custom-scripts.js"></script>
+
+</body>
+
+</html>

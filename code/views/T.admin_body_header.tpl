@@ -24,7 +24,7 @@
                     <a href="/admin/teacher_manager">教师信息管理</a>
                 </li>
                 <li>
-                    <a href="/admin/teacher_select_course_manager">教师选课管理</a>
+                    <a href="/admin/teacher_select_course_manager">教师派课管理</a>
                 </li>
                 <li>
                     <a href="/admin/student_manager">学生信息管理</a>

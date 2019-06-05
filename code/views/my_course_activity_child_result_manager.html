@@ -2,8 +2,36 @@
 <title>管理员首页</title>
 
 <script type="text/javascript">
+    // 修改教学活动项
+    function ModifyTAChild(tacid) {
+        document.getElementById("modifyDiv").style.display = "block";
+
+        $.post("/teacher/my_course_activity_child_result_manager/get_tachild_info",{
+            TACId:tacid,
+        },function(data){
+            if(data.Code == 0){
+                $("#AChildNameText").val(data.TAChild.Name);
+                $("#AChildValueText").val(data.TAChild.Value);
+
+                for(i = 0; i < data.SuptTeTs.length; i++){
+                    document.getElementById("TeT"+data.SuptTeTs[i].TeT_id).checked = true;
+                }
+            }
+        },"json");
+    }
+
+    // 取消修改
+    function CancelModifyTAChild(){
+        document.getElementById("modifyDiv").style.display = "none";
+    }
+
+    // 删除教学活动项
+    function DeleteTAChild(tacid, tscid, taid){
+        window.location = "/teacher/my_course_activity_child_result_manager/delete_tachild?tscid="+tscid+"&taid="+taid+"&tacid="+tacid;
+    }
+
     // 调整成绩
-    function ModifyResult() {
+    function ModifyTACResult() {
         var inputList = document.getElementsByClassName("inputs");
         var labelList = document.getElementsByClassName("labels");
         // 隐藏label
@@ -17,7 +45,7 @@
     }
 
     // 取消调整成绩
-    function CancelModifyResult() {
+    function CancelModifyTACResult() {
         var inputList = document.getElementsByClassName("inputs");
         var labelList = document.getElementsByClassName("labels");
         // 显示label
@@ -40,16 +68,16 @@
 
                 if(data.TACR.Students != null){
                     for (i = 0; i < data.TACR.Students.length; i++){
-                        $("#TableBody").append('<tr id="'+ data.TACR.Students[i].Id+'"></tr>');
-                        $("#"+data.TACR.Students[i].Id).append('<td>'+data.TACR.Students[i].Number+'</td>');
-                        $("#"+data.TACR.Students[i].Id).append('<td>'+data.TACR.Students[i].Name+'</td>');
-                        $("#"+data.TACR.Students[i].Id).append('<td id="'+ tacid+data.TACR.Students[i].Id +'"></td>');
+                        $("#TableBody").append('<tr id="stu'+ data.TACR.Students[i].Id+'"></tr>');
+                        $("#stu"+data.TACR.Students[i].Id).append('<td>'+data.TACR.Students[i].Number+'</td>');
+                        $("#stu"+data.TACR.Students[i].Id).append('<td>'+data.TACR.Students[i].Name+'</td>');
+                        $("#stu"+data.TACR.Students[i].Id).append('<td id="stuResult'+ tacid+data.TACR.Students[i].Id +'"></td>');
                     }
                 }
 
                 if(data.TACR.TAChildResults != null){
                     for (i = 0; i < data.TACR.TAChildResults.length; i++){
-                        $("#"+ data.TACR.TAChildResults[i].TAC_id + data.TACR.TAChildResults[i].Student_id).append(
+                        $("#stuResult"+ data.TACR.TAChildResults[i].TAC_id + data.TACR.TAChildResults[i].Student_id).append(
                             '<div class="labels"><label>'+data.TACR.TAChildResults[i].Result+'</label></div>' +
                             '<input type="hidden" name="SIds" value="'+data.TACR.TAChildResults[i].Student_id+'">' +
                             '<div class="inputs" style="display: none;"><input name="SResults" value="'+data.TACR.TAChildResults[i].Result+'"></div>');
@@ -86,7 +114,9 @@
                     教学活动活动项成绩管理
                     <h4><a href="/teacher/my_course_activity_child?taid={{.TAId}}&tscid={{.TSCId}}">返回上一页</a></h4><br>
                 </h1>
-                <button type="button" class="btn btn-default" onclick="ModifyResult()">调整成绩</button>
+                <button type="button" class="btn btn-default" onclick="ModifyTACResult()">调整成绩</button>
+                <button type="button" class="btn btn-default" onclick="ModifyTAChild({{.TACId}})">修改活动项信息</button>
+                <button type="button" class="btn btn-default" onclick="DeleteTAChild({{.TACId}}, {{.TSCId}}, {{.TAId}})">删除该活动项</button>
                 <br><br>
             </div>
         </div>
@@ -95,6 +125,45 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        <div id="modifyDiv" style="display:none;width:800px;margin-left: 100px">
+                            <br>
+                            <label style="font-size:30px">修改教学活动项</label>
+                            <hr>
+                            <div style="width:800px;margin-left: 100px">
+                                <form name="AChildForm" role="form" action="/teacher/my_course_activity_child_result_manager/modify_tachild"  method="post">
+                                    <div style="width:500px;">
+                                        <input type="hidden" name="TAId" value="{{.TAId}}">
+                                        <input type="hidden" name="TACId" value="{{.TACId}}">
+                                        <input type="hidden" name="TSCId" value="{{.TSCId}}">
+                                        <input type="hidden" name="TACName" value="{{.TACName}}">
+                                        <input type="hidden" name="TACValue" value="{{.TACValue}}">
+                                        <h4>活动名：</h4>
+                                        <input id="AChildNameText" class="form-control" name="TAChildName" style="width:200px;"><br>
+                                        <h4>分值：</h4>
+                                        <input id="AChildValueText" class="form-control" name="TAChildValue" style="width:200px;"><br>
+                                        <h3>所支撑教学目标选择：</h3><br>
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr><th>教学目标</th><th>内容</th><th>操作</th></tr>
+                                            </thead>
+                                            <tbody>
+                                            {{range .TeTs}}
+                                                <tr>
+                                                    <td>{{.Number}}</td>
+                                                    <td>{{.Description}}</td>
+                                                    <td><input id="TeT{{.Id}}" type="checkbox" style="zoom: 200%" name="TeTIds" value="{{.Id}}"></td>
+                                                </tr>
+                                            {{end}}
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                        <input type="submit" class="btn btn-default">
+                                        <button type="button" class="btn btn-default" onclick="CancelModifyTAChild()">取消</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <br><br><br>
+                        </div>
                     </div>
 
                     <div style="margin-left: 50px">
@@ -111,11 +180,14 @@
                                         ViewTAChildResultTable({{.TACId}}, {{.TACName}}, {{.TACValue}})
                                     </script>
                                 </table>
+                                <input type="hidden" name="TAId" value="{{.TAId}}">
                                 <input type="hidden" name="TACId" value="{{.TACId}}">
+                                <input type="hidden" name="TSCId" value="{{.TSCId}}">
                                 <input type="hidden" name="TACName" value="{{.TACName}}">
+                                <input type="hidden" name="TACValue" value="{{.TACValue}}">
                                 <div class="inputs" style="display: none;">
                                     <input type="submit" class="btn btn-default">
-                                    <button type="button" class="btn btn-default" onclick="CancelModifyResult()">取消</button>
+                                    <button type="button" class="btn btn-default" onclick="CancelModifyTACResult()">取消</button>
                                 </div>
                             </form>
                         </div>

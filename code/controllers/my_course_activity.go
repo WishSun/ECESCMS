@@ -34,6 +34,7 @@ func (this *MyCourseActivityController) Get() {
 	if err != nil {
 		logs.Error(err)
 	}
+	logs.Info("活动信息：", tas)
 	this.Data["TeachActivitys"] = tas
 }
 
@@ -46,6 +47,7 @@ func (this *MyCourseActivityController) AddActivity() {
 	tscid := this.Input().Get("TSCId")
 	name := this.Input().Get("ACName")
 	weight := this.Input().Get("TAWeight")
+	resultWeight := this.Input().Get("TAResultWeight")
 
 	tetws := make([]*common.SendTeTWeight, 0)
 	var tetWeightNum int64
@@ -62,7 +64,7 @@ func (this *MyCourseActivityController) AddActivity() {
 		tetws = append(tetws, &common.SendTeTWeight{TeTId: tetIds[i], Weight: tetWeightNum})
 	}
 
-	err = models.AddTSCTeachActivity(tscid, name, weight, tetws)
+	err = models.AddTSCTeachActivity(tscid, name, weight, resultWeight, tetws)
 	if err != nil {
 		logs.Error(err)
 	}
@@ -80,13 +82,14 @@ func (this *MyCourseActivityController) ModifyActivity() {
 	taid := this.Input().Get("TAId")
 	name := this.Input().Get("ACName")
 	weight := this.Input().Get("TAWeight")
+	resultWeight := this.Input().Get("TAResultWeight")
 
 	tetwms := make([]*common.SendTeTWeightToModify, 0)
 	for i := 0; i < len(ttwIds); i++ {
 		tetwms = append(tetwms, &common.SendTeTWeightToModify{ttwIds[i], weights[i]})
 	}
 
-	err := models.ModifyTSCTeachActivity(taid, name, weight, tetwms)
+	err := models.ModifyTSCTeachActivity(taid, name, weight, resultWeight, tetwms)
 	if err != nil {
 		logs.Error(err)
 	}
@@ -148,17 +151,18 @@ func (this *MyCourseActivityController) GetTeTWs() {
 	tscid := this.Input().Get("TSCId")
 
 	type Message struct {
-		Code     int
-		TAName   string
-		TAWeight int64
-		TeTWs    []*common.ModifyGetTeTWeight
+		Code           int
+		TAName         string
+		TAWeight       int64
+		TAResultWeight int64
+		TeTWs          []*common.ModifyGetTeTWeight
 	}
 
 	m := Message{}
 	var err error
 	mttws := make([]*common.ModifyGetTeTWeight, 0)
 
-	m.TAName, m.TAWeight, mttws, err = models.GetTATeTWs(taid, tscid)
+	m.TAName, m.TAWeight, m.TAResultWeight, mttws, err = models.GetTATeTWs(taid, tscid)
 	if err != nil {
 		m.Code = 1
 		logs.Error(err)

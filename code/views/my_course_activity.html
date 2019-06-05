@@ -69,7 +69,6 @@
         viewElem("modifyLabel");
         hideElem("addLabel");
         $("#TAIdText").val(taid);
-        alert("taid为"+taid);
         document.ACForm.action = "/teacher/my_course_activity/modify_activity";
 
         // 删除之前的表格
@@ -82,6 +81,7 @@
             if(data.Code == 0){
                 $("#ActivityNameText").val(data.TAName);
                 $("#TAWeightText").val(data.TAWeight);
+                $("#TAResultWeightText").val(data.TAResultWeight);
                 $("#TeTViewDiv").append('' +
                     '<table id="viewTable" class="table table-striped table-bordered table-hover">' +
                     '<thead>' +
@@ -173,10 +173,12 @@
                                         <input id="TAIdText" type="hidden" name="TAId">
                                         <h4>1.活动名：</h4>
                                         <input id="ActivityNameText" class="form-control" name="ACName" style="width:200px;"><br>
-                                        <h4>2.活动在教学过程中的权重：</h4><small>(注意本课程所有教学活动的权重值相加等于100)</small><br><br>
+                                        <h4>2.活动在教学目标中的权重：</h4><small>(注意本课程所有教学活动的权重值相加等于100)</small><br><br>
                                         <input id="TAWeightText" class="form-control" name="TAWeight" style="width:200px;"><br>
+                                        <h4>3.活动在学生成绩中的权重：</h4><small>(注意本课程所有教学活动的权重值相加等于100)</small><br><br>
+                                        <input id="TAResultWeightText" class="form-control" name="TAResultWeight" style="width:200px;"><br>
                                         <br>
-                                        <h4>3.所支撑的教学目标权重分配：</h4><small>(注意本教学活动的所有教学目标权重值相加等于100)</small><br><br>
+                                        <h4>4.所支撑的教学目标分数分配：</h4><small>(注意本教学活动的所有教学目标分数值相加等于100)</small><br><br>
 
                                         <div id="TeTViewDiv"></div>
 
@@ -208,7 +210,7 @@
                                 {{range .TeachActivitys}}
                                     <tr class="odd">
                                         <td>{{.Name}}</td>
-                                        <td>{{.Weight}}%</td>
+                                        <td>在教学目标中权重：{{.Weight}}%<br>在学生成绩中权重：{{.ResultWeight}}%</td>
                                         <td><div style="width:200px;font-family: 华文楷体;" id="viewWeight{{.Id}}"></div></td>
                                         <td>
                                             <a href="#" onclick="ModifyTeachTarget({{.Id}}, {{$tscId}})">修改</a>

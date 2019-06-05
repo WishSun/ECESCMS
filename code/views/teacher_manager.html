@@ -58,7 +58,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <!-- 添加老师 -->
-                        <div id="AddForm" style="idth:800px;margin-left: 100px">
+                        <div id="AddForm" style="display:none;width:800px;margin-left: 100px">
                             <br>
                             <label style="font-size:30px">添加新老师</label>
                             <hr>
@@ -70,7 +70,7 @@
                                         <label>名字：</label>
                                         <input id="TNameText" class="form-control" name="TName" style="width:200px;">
                                         <label>密码(初始密码为6个0)：</label>
-                                        <input class="form-control" type="text" placeholder="000000" disabled="" name="TPwd">
+                                        <input class="form-control" type="text" placeholder="000000" disabled="" name="TPwd" value="000000">
                                         <br>
                                         <input type="submit" class="btn btn-default">
                                         <button type="button" class="btn btn-default" onclick="CancelAdd()">取消</button>
@@ -101,8 +101,8 @@
                                         <td>{{.Number}}</td>
                                         <td>{{.Name}}</td>
                                         <td>
-                                            <a href="/admin/teacher_manager/delete?tid={{.Id}}">删除</a>
-                                            <button type="button" class="btn btn-default" onclick="ResetPwd({{.Id}})">重置密码</button>
+                                            <a href="/admin/teacher_manager/delete?tid={{.Id}}">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button type="button" onclick="ResetPwd({{.Id}})">重置密码</button>
                                         </td>
                                     </tr>
                                 {{end}}

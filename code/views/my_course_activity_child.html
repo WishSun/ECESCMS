@@ -95,12 +95,11 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <!-- 添加/修改毕业要求 -->
                         <div id="AndDiv" style="display:none;width:800px;margin-left: 100px">
                             <br>
                             <label style="font-size:30px">添加新教学活动项</label>
                             <hr>
-                            <div style="idth:800px;margin-left: 100px">
+                            <div style="width:800px;margin-left: 100px">
                                 <form name="AChildForm" role="form" action="/teacher/my_course_activity_child"  method="post">
                                     <div style="width:500px;">
                                         <input type="hidden" name="TSCId" value="{{.TSCId}}">
@@ -141,7 +140,7 @@
                         <div class="table-responsive">
                             <form>
                                 <input id="TAIdText" type="hidden" value="{{.TAId}}">
-                                <input id="TSCIdText" type="hidden" value="{{.TAId}}">
+                                <input id="TSCIdText" type="hidden" value="{{.TSCId}}">
                             </form>
                             <table class="table table-striped table-bordered table-hover">
                                 <thead><tr id="TableHeadTr"></tr></thead>

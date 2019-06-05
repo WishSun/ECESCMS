@@ -6,6 +6,10 @@
     function SetInitVal(id, val){
         $("#"+id).val(val)
     }
+
+    function Back(mid, grade) {
+        window.location = "/admin/teacher_select_course_view?grade=" + grade + "&mid=" + mid
+    }
 </script>
 </head>
 
@@ -63,6 +67,8 @@
                                 </tbody>
                             </table>
                                 <button type="submit">提交修改</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" onclick="Back({{.Mid}}, {{.Grade}})">取消修改</button>
                             </form>
                         </div>
                     </div>
