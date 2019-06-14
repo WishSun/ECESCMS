@@ -58,6 +58,14 @@ func GetTeacher(number string) (*Teacher, error) {
 	return teacher, err
 }
 
+// 根据ID获取教师信息
+func GetTeacherById(tid string) (*Teacher, error) {
+	o := orm.NewOrm()
+	teacher := &Teacher{}
+	err := o.Raw("select * from teacher where id=?", tid).QueryRow(teacher)
+	return teacher, err
+}
+
 // 获取指定教师的课程列表
 func GetTeacherCourseList(tid int64) ([]*common.TSCListType, error) {
 	o := orm.NewOrm()
@@ -66,7 +74,7 @@ func GetTeacherCourseList(tid int64) ([]*common.TSCListType, error) {
 	tscs := make([]*TeacherSelectCourse, 0)
 	qs := o.QueryTable("TeacherSelectCourse")
 	_, err := qs.Filter("teacher_id", tid).All(&tscs)
-	if err != nil{
+	if err != nil {
 		return tsclist, err
 	}
 
@@ -77,20 +85,20 @@ func GetTeacherCourseList(tid int64) ([]*common.TSCListType, error) {
 	mmc := MajorMapCourse{}
 	major := Major{}
 	course := Course{}
-	for _, tsc := range tscs{
+	for _, tsc := range tscs {
 		err = qs.Filter("id", tsc.MMC_id).One(&mmc)
-		if err != nil{
+		if err != nil {
 			return tsclist, err
 		}
 		err = qsCourse.Filter("id", mmc.Course_id).One(&course)
-		if err != nil{
+		if err != nil {
 			return tsclist, err
 		}
 		err = qsMajor.Filter("id", mmc.Major_id).One(&major)
-		if err != nil{
+		if err != nil {
 			return tsclist, err
 		}
-		tsclist = append(tsclist, &common.TSCListType{tsc.Id,course.Number, course.NameCN, tsc.Grade, major.Name})
+		tsclist = append(tsclist, &common.TSCListType{tsc.Id, course.Number, course.NameCN, tsc.Grade, major.Name})
 	}
 	return tsclist, err
 }

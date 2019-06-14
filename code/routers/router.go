@@ -63,6 +63,9 @@ func init() {
 	beego.Router("/admin/student_manager/delete", &controllers.StudentManagerController{}, "get:Delete")
 	beego.Router("/admin/student_manager/modify", &controllers.StudentManagerController{}, "post:Modify")
 
+	// 教师我的密码管理
+	beego.Router("/teacher/my_password_manager", &controllers.MyPasswordManagerController{})
+	beego.Router("/teacher/my_password_manager/check_password", &controllers.MyPasswordManagerController{}, "post:CheckPassword")
 	//教师我的课程管理
 	beego.Router("/teacher/my_course_manager", &controllers.MyCourseManagerController{})
 	beego.Router("/teacher/my_course_teach_target", &controllers.MyCourseTeachTargetController{})

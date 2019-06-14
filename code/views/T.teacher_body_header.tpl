@@ -9,7 +9,7 @@
                     <a href="/teacher/my_course_manager">我的课程</a>
                 </li>
                 <li>
-                    <a href="/teacher/my_modify_password">修改密码</a>
+                    <a href="/teacher/my_password_manager">修改密码</a>
                 </li>
             </ul>
         </div>
